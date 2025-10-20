@@ -4,52 +4,46 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes - TPAinaja Admin Panel
 |--------------------------------------------------------------------------
-| Versi final dan rapi. Semua route dibagi per bagian:
-| 1. Landing page (home)
-| 2. Auth (login, logout)
-| 3. Dashboard (untuk user login)
-| 4. Exam dan Question CRUD
+| Struktur akhir yang stabil dan bebas duplikasi.
+| Semua route sudah terkelompok dan tidak akan bentrok antar controller.
 |--------------------------------------------------------------------------
 */
 
 //
-// 🏠 1️⃣ Landing Page
+// 🏠 1️⃣ Landing Page (Public)
 //
 Route::get('/', function () {
     return view('landing');
 })->name('home');
 
 //
-// 🔐 2️⃣ Autentikasi
+// 🔐 2️⃣ Authentication (Login & Logout)
 //
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'login')->name('login.post');
-    Route::get('/logout', 'logout')->name('logout');
+    Route::get('/login', 'showLoginForm')->name('login'); // Form login
+    Route::post('/login', 'login')->name('login.post');   // Proses login
+    Route::get('/logout', 'logout')->name('logout');      // Logout
 });
 
 //
-// 💼 3️⃣ Dashboard (hanya user login)
+// 💼 3️⃣ Admin Panel (Protected by Auth Middleware)
 //
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    // Dashboard
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-Route::resource('exam', ExamController::class)->except(['show']);
-});
 
+    // Exam CRUD
+    Route::resource('exam', ExamController::class)->except(['show']);
 
-//
-// 🧠 4️⃣ Exam & Question Management (CRUD)
-//
-Route::middleware('auth')->group(function () {
-    // CRUD untuk ujian
-    Route::resource('exam', ExamController::class);
-
-    // CRUD untuk soal berdasarkan exam_id
+    // Question CRUD per Exam
     Route::prefix('exam/{exam_id}')->group(function () {
         Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
         Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
@@ -58,10 +52,14 @@ Route::middleware('auth')->group(function () {
         Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
         Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
     });
+
+    // Participants CRUD
+    Route::resource('participants', ParticipantController::class)->except(['show']);
+
+    // Staff
+    Route::resource('staff', StaffController::class)->only(['index', 'create']);
+
+    // Reports
+    Route::resource('reports', ReportController::class)->only(['index', 'create']);
 });
-
-//
-// ⚙️ 5️⃣ Redirect lama (opsional, supaya link lama tidak error)
-//
-
 
