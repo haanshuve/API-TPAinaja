@@ -7,6 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a2c34e8fdc.js" crossorigin="anonymous"></script>
 </head>
+
+
+
+
+
+
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
 
     <!-- SIDEBAR PUTIH -->
@@ -77,6 +83,93 @@
     <main class="flex-1 p-8 overflow-y-auto">
         @yield('content')
     </main>
+
+<!-- ✅ Modal Edit Profil -->
+<div x-data="{ openProfile: false }">
+    <!-- Tombol Profil di Header -->
+    <div class="relative">
+        <button @click="openProfile = true" 
+            class="w-10 h-10 bg-yellow-400 text-white font-bold rounded-full flex items-center justify-center shadow-md focus:outline-none">
+            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+        </button>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div x-show="openProfile" 
+         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50" 
+         x-cloak>
+        <div class="bg-white rounded-xl shadow-lg p-6 w-[450px]">
+            <h2 class="text-xl font-semibold mb-4">Edit Profil</h2>
+
+            <!-- 🖼️ Foto Profil -->
+            <div class="flex items-center space-x-4 mb-4">
+                <img id="profile-preview"
+                     src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('images/default-avatar.png') }}" 
+                     alt="Foto Profil"
+                     class="w-16 h-16 rounded-full object-cover border border-gray-300">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Upload Profil Picture</label>
+                    <input type="file" name="profile_picture" id="profile_picture"
+                        class="mt-1 text-sm border border-gray-300 rounded-md px-2 py-1 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+                        accept="image/*"
+                        onchange="previewProfile(event)">
+                </div>
+            </div>
+
+            <!-- 🧾 Form -->
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-3">
+                @csrf
+                @method('PUT')
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-sm text-gray-700">Name</label>
+                        <input type="text" name="name" value="{{ Auth::user()->name }}" class="w-full border rounded-md px-2 py-1">
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-700">Address</label>
+                        <input type="text" name="address" value="{{ Auth::user()->address }}" class="w-full border rounded-md px-2 py-1">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-sm text-gray-700">Phone</label>
+                        <input type="text" name="phone" value="{{ Auth::user()->phone }}" class="w-full border rounded-md px-2 py-1">
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-700">Email</label>
+                        <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full border rounded-md px-2 py-1">
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 mt-4">
+                    <button type="button" @click="openProfile = false" 
+                        class="px-4 py-2 rounded-md border text-red-500 border-gray-300 hover:bg-gray-100">Close</button>
+                    <button type="submit" 
+                        class="px-4 py-2 rounded-md bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold shadow-sm">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Script untuk preview foto -->
+<script>
+function previewProfile(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+        document.getElementById('profile-preview').src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+<!-- Alpine.js -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+
+
 
 </body>
 </html>

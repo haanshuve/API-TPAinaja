@@ -7,7 +7,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
-
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes - TPAinaja Admin Panel
@@ -61,5 +61,11 @@ Route::middleware(['auth'])->group(function () {
 
     // Reports
     Route::resource('reports', ReportController::class)->only(['index', 'create']);
+
+// profile
+    Route::middleware('auth')->group(function () {
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+});
 });
 

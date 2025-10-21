@@ -17,8 +17,8 @@
       <img 
         src="{{ asset('images/logo-tpainaja.png') }}" 
         alt="Logo TPAinaja" 
-        class="mx-auto w-32 mb-4 drop-shadow-md"  <!-- 128px -->
-
+        class="mx-auto w-32 mb-4 drop-shadow-md"
+      >
       <h2 class="text-xl font-semibold text-gray-700 mt-2">HI, ADMIN</h2>
       <p class="text-gray-500 text-base mt-1">Welcome Back,<br>You have been missed</p>
     </div>
@@ -27,26 +27,28 @@
     <form method="POST" action="/login" class="space-y-4">
       @csrf
       <div>
-        <input type="text" name="email" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#3B82F6] focus:outline-none" required>
+        <input type="text" name="email" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
       </div>
       <div>
-        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#3B82F6] focus:outline-none" required>
+        <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
       </div>
       @error('loginError')
         <p class="text-red-500 text-sm">{{ $message }}</p>
       @enderror
 
       <div class="text-right">
-        <a href="#" class="text-sm text-[#0A2540] hover:underline">Forgot Password?</a>
+        <a href="#" class="text-sm text-yellow-600 hover:underline">Forgot Password?</a>
       </div>
 
-      <button type="submit" class="w-full bg-[#3B82F6] text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition">
+      <!-- Tombol Login Warna Kuning -->
+      <button type="submit" 
+        class="w-full bg-yellow-400 text-gray-900 font-semibold py-2 rounded-md hover:bg-yellow-500 transition">
         LOGIN
       </button>
 
       <p class="text-center text-sm mt-4 text-gray-700">
         Don’t have an account?
-        <a href="#" class="font-semibold text-[#0A2540] hover:underline">Register Now</a>
+        <a href="#" class="font-semibold text-yellow-600 hover:underline">Register Now</a>
       </p>
     </form>
   </div>
