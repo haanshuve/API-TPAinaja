@@ -81,6 +81,6 @@ class ParticipantController extends Controller
         $participant->delete();
 
         return redirect()->route('participants.index')
-            ->with('success', 'Peserta berhasil dihapus!');
+            ->with('success', 'Peserta berhasil dihapus yaa!');
     }
 }
