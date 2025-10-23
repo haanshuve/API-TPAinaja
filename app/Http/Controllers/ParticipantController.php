@@ -2,63 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Participant;
 use Illuminate\Http\Request;
+use App\Models\Participant;
 use Illuminate\Support\Facades\Hash;
 
 class ParticipantController extends Controller
 {
+    /**
+     * 🟡 Tampilkan daftar peserta
+     */
     public function index()
     {
-        $participants = Participant::all();
+        $participants = Participant::all(); // ambil semua data peserta
         return view('participants.index', compact('participants'));
     }
 
-    public function create()
-    {
-        return view('participants.create');
-    }
-
+    /**
+     * 🟢 Simpan peserta baru
+     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:participants,email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
         ]);
 
         Participant::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('participants.index')->with('success', '✅ Peserta berhasil ditambahkan!');
+        return redirect()->route('participants.index')
+            ->with('success', 'Peserta berhasil ditambahkan!');
     }
 
-    public function edit(Participant $participant)
+    /**
+     * 🟠 Edit peserta
+     */
+    public function edit($id)
     {
+        $participant = Participant::findOrFail($id);
         return view('participants.edit', compact('participant'));
     }
 
-    public function update(Request $request, Participant $participant)
+    /**
+     * 🔵 Update peserta
+     */
+    public function update(Request $request, $id)
     {
+        $participant = Participant::findOrFail($id);
+
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:participants,email,' . $participant->id,
+            'password' => 'nullable|min:6',
         ]);
 
         $participant->update([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
+            'password' => $request->password
+                ? Hash::make($request->password)
+                : $participant->password,
         ]);
 
-        return redirect()->route('participants.index')->with('success', '✅ Peserta berhasil diperbarui!');
+        return redirect()->route('participants.index')
+            ->with('success', 'Peserta berhasil diperbarui!');
     }
 
-    public function destroy(Participant $participant)
+    /**
+     * 🔴 Hapus peserta
+     */
+    public function destroy($id)
     {
+        $participant = Participant::findOrFail($id);
         $participant->delete();
-        return redirect()->route('participants.index')->with('success', '🗑️ Peserta berhasil dihapus!');
+
+        return redirect()->route('participants.index')
+            ->with('success', 'Peserta berhasil dihapus!');
     }
 }
