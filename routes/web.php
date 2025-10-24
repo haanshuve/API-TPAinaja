@@ -62,6 +62,11 @@ Route::middleware(['auth'])->group(function () {
     // Reports
     Route::resource('reports', ReportController::class)->only(['index', 'create']);
 
+
+
+Route::get('/exam/{id}/questions', [ExamController::class, 'questions'])->name('exam.questions');
+
+
 // profile
     Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

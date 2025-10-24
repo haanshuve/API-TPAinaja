@@ -6,9 +6,7 @@
 <div class="min-h-screen bg-[#F8FAFC] px-8 py-6" x-data="{ openAdd: false }">
     <!-- Header Page -->
     <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-2xl font-semibold text-gray-800">Peserta</h1>
-        </div>
+        <h1 class="text-2xl font-semibold text-gray-800">Peserta</h1>
 
         <div class="flex items-center space-x-3">
             <select class="border border-gray-300 rounded-md text-sm px-3 py-1 text-gray-600">
@@ -28,7 +26,9 @@
     <!-- 📋 Daftar Peserta -->
     <div class="space-y-4">
         @forelse ($participants as $participant)
-            <div class="flex justify-between items-center bg-white rounded-xl shadow-sm px-6 py-3 border border-gray-100">
+            <div
+                class="flex justify-between items-center bg-white rounded-xl shadow-md px-6 py-4 border border-gray-100 hover:shadow-lg transition duration-200">
+                
                 <!-- Nama & Email -->
                 <div class="flex flex-col">
                     <span class="text-lg font-semibold text-gray-800">{{ $participant->name }}</span>
@@ -36,27 +36,34 @@
                 </div>
 
                 <!-- Password & Aksi -->
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center">
-                        <span class="text-gray-700 tracking-widest font-medium">********</span>
-                        <i class="fas fa-eye-slash text-gray-500 ml-2"></i>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center text-gray-700">
+                        <span class="tracking-widest font-semibold">********</span>
+                        <i class="fas fa-eye-slash text-gray-400 ml-2"></i>
                     </div>
 
-                    <div class="flex items-center space-x-2">
-                        <a href="{{ route('participants.edit', $participant->id) }}" 
-                           class="p-2 bg-yellow-100 hover:bg-yellow-200 rounded-full text-yellow-600 transition">
-                            <i class="fas fa-pen"></i>
-                        </a>
+                    <!-- Tombol Edit dan Hapus -->
+<div class="flex items-center gap-3 z-10 relative">
+    <!-- Edit -->
+    <a href="{{ route('participants.edit', $participant->id) }}"
+        class="w-9 h-9 flex items-center justify-center rounded-full bg-[#FFF8E1] shadow-md hover:shadow-lg hover:scale-105 transition duration-200"
+        title="Edit Peserta">
+        <i class="fas fa-pen text-[#FBBF24] text-[14px]"></i>
+    </a>
 
-                        <form action="{{ route('participants.destroy', $participant->id) }}" method="POST" onsubmit="return confirm('Hapus peserta ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" 
-                                class="p-2 bg-red-100 hover:bg-red-200 rounded-full text-red-600 transition">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </form>
-                    </div>
+    <!-- Hapus -->
+    <form action="{{ route('participants.destroy', $participant->id) }}" method="POST"
+        onsubmit="return confirm('Yakin ingin menghapus peserta ini?')" class="inline-block z-10 relative">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+            class="w-9 h-9 flex items-center justify-center rounded-full bg-[#FFE4E6] shadow-md hover:shadow-lg hover:scale-105 transition duration-200"
+            title="Hapus Peserta">
+            <i class="fas fa-times text-[#EF4444] text-[14px]"></i>
+        </button>
+    </form>
+</div>
+
                 </div>
             </div>
         @empty

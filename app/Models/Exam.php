@@ -10,9 +10,10 @@ class Exam extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'weight',
-        'question_count',
-        'duration',
+        'nama_ujian',
+        'jumlah_soal',
+        'bobot_nilai',
+        'waktu_ujian',
+        'logo',
     ];
 }
