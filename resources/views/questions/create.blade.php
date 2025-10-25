@@ -1,34 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-6 max-w-2xl mx-auto">
-    <h2 class="text-xl font-semibold mb-4">Tambah Soal untuk {{ $exam->name }}</h2>
-    <form action="{{ route('questions.store', $exam->id) }}" method="POST">
+<div class="container mx-auto px-6 py-4">
+    <h2 class="text-2xl font-semibold mb-4">Tambah Soal untuk: {{ $exam->nama_ujian }}</h2>
+
+    <form action="{{ route('questions.store', $exam->id) }}" method="POST" class="bg-white p-6 rounded-lg shadow">
         @csrf
 
-        <div class="mb-3">
-            <label>Isi Soal</label>
-            <textarea name="question_text" class="w-full border p-2 rounded" required></textarea>
+        <div class="mb-4">
+            <label class="block font-medium">Pertanyaan</label>
+            <textarea name="question" class="border rounded w-full p-2" rows="3"></textarea>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-            <div><label>Opsi A</label><input type="text" name="option_a" class="w-full border p-2 rounded"></div>
-            <div><label>Opsi B</label><input type="text" name="option_b" class="w-full border p-2 rounded"></div>
-            <div><label>Opsi C</label><input type="text" name="option_c" class="w-full border p-2 rounded"></div>
-            <div><label>Opsi D</label><input type="text" name="option_d" class="w-full border p-2 rounded"></div>
+        <div class="mb-4">
+            <label class="block font-medium mb-2">Opsi Jawaban</label>
+
+            @for ($i = 1; $i <= 4; $i++)
+                <div class="flex items-center mb-2">
+                    <input type="text" name="option_{{ $i }}" placeholder="Option {{ $i }}" class="border rounded w-full p-2">
+                    <label class="flex items-center ml-3">
+                        <input type="radio" name="correct_answer" value="option_{{ $i }}" class="mr-1">
+                        <span class="text-gray-600 text-sm">Jawaban Benar</span>
+                    </label>
+                </div>
+            @endfor
         </div>
 
-        <div class="mt-3">
-            <label>Jawaban Benar</label>
-            <select name="correct_answer" class="border p-2 rounded">
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-            </select>
+        <div class="flex justify-end space-x-2 mt-4">
+            <a href="{{ route('questions.index', $exam->id) }}" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Batal</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
         </div>
-
-        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Simpan</button>
     </form>
 </div>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Exam;
+use App\Models\Question; // ⬅️ Tambahkan ini untuk ambil data soal
 use Illuminate\Support\Facades\Storage;
 
 class ExamController extends Controller
@@ -15,7 +16,6 @@ class ExamController extends Controller
     {
         $exams = Exam::latest()->get();
         return view('exam.index', compact('exams'));
-        
     }
 
     /**
@@ -23,8 +23,7 @@ class ExamController extends Controller
      */
     public function create()
     {
-       return view('exam.create');
-
+        return view('exam.create');
     }
 
     /**
@@ -32,26 +31,20 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_ujian' => 'required|string|max:255',
-            'jumlah_soal' => 'required|integer|min:1',
-            'bobot_nilai' => 'required|numeric|min:0',
-            'waktu_ujian' => 'required|integer|min:1',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        $validated = $request->validate([
+            'nama_ujian'   => 'required|string|max:255',
+            'jumlah_soal'  => 'required|integer|min:1',
+            'bobot_nilai'  => 'required|numeric|min:0',
+            'waktu_ujian'  => 'required|integer|min:1',
+            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Simpan logo kalau ada
-        $logoPath = $request->file('logo')
-            ? $request->file('logo')->store('logos', 'public')
-            : null;
+        // Simpan logo jika ada
+        if ($request->hasFile('logo')) {
+            $validated['logo'] = $request->file('logo')->store('logos', 'public');
+        }
 
-        Exam::create([
-            'nama_ujian' => $request->nama_ujian,
-            'jumlah_soal' => $request->jumlah_soal,
-            'bobot_nilai' => $request->bobot_nilai,
-            'waktu_ujian' => $request->waktu_ujian,
-            'logo' => $logoPath,
-        ]);
+        Exam::create($validated);
 
         return redirect()->route('exam.index')->with('success', 'Ujian berhasil ditambahkan!');
     }
@@ -62,7 +55,7 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam = Exam::findOrFail($id);
-        return view('exams.edit', compact('exam'));
+        return view('exam.edit', compact('exam'));
     }
 
     /**
@@ -70,33 +63,31 @@ class ExamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_ujian' => 'required|string|max:255',
-            'jumlah_soal' => 'required|integer|min:1',
-            'bobot_nilai' => 'required|numeric|min:0',
-            'waktu_ujian' => 'required|integer|min:1',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        $validated = $request->validate([
+            'nama_ujian'   => 'required|string|max:255',
+            'jumlah_soal'  => 'required|integer|min:1',
+            'bobot_nilai'  => 'required|numeric|min:0',
+            'waktu_ujian'  => 'required|integer|min:1',
+            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $exam = Exam::findOrFail($id);
 
-        // Simpan logo baru jika diupload
+        // Jika upload logo baru
         if ($request->hasFile('logo')) {
-            // Hapus logo lama (jika ada)
+            // Hapus logo lama kalau masih ada di storage
             if ($exam->logo && Storage::disk('public')->exists($exam->logo)) {
                 Storage::disk('public')->delete($exam->logo);
             }
-            $logoPath = $request->file('logo')->store('logos', 'public');
-            $exam->logo = $logoPath;
+
+            // Upload logo baru
+            $validated['logo'] = $request->file('logo')->store('logos', 'public');
+        } else {
+            // Jika tidak ada upload baru, pakai logo lama
+            $validated['logo'] = $exam->logo;
         }
 
-        $exam->update([
-            'nama_ujian' => $request->nama_ujian,
-            'jumlah_soal' => $request->jumlah_soal,
-            'bobot_nilai' => $request->bobot_nilai,
-            'waktu_ujian' => $request->waktu_ujian,
-            'logo' => $exam->logo,
-        ]);
+        $exam->update($validated);
 
         return redirect()->route('exam.index')->with('success', 'Ujian berhasil diperbarui!');
     }
@@ -119,11 +110,20 @@ class ExamController extends Controller
     }
 
     /**
-     * Halaman tambah soal untuk ujian tertentu
+     * Halaman daftar soal untuk ujian tertentu
      */
     public function questions($id)
     {
         $exam = Exam::findOrFail($id);
-        return view('questions.index', compact('exam'));
+
+        // Ambil soal berdasarkan ujian (kalau tabel questions sudah ada)
+        if (class_exists(Question::class)) {
+            $questions = Question::where('exam_id', $exam->id)->get();
+        } else {
+            // Kalau model Question belum dibuat
+            $questions = [];
+        }
+
+        return view('questions.index', compact('exam', 'questions'));
     }
 }
