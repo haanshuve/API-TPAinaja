@@ -8,11 +8,6 @@
     <script src="https://kit.fontawesome.com/a2c34e8fdc.js" crossorigin="anonymous"></script>
 </head>
 
-
-
-
-
-
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
 
     <!-- SIDEBAR PUTIH -->
@@ -68,10 +63,10 @@
         </div>
 
         <div class="px-4 space-y-3 border-t border-gray-200 pt-4">
-            <a href="#" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
+            {{-- <a href="#" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
                 <i class="fas fa-cog w-5 text-center"></i>
                 <span>Settings</span>
-            </a>
+            </a> --}}
             <a href="{{ route('logout') }}" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
                 <i class="fas fa-sign-out-alt w-5 text-center"></i>
                 <span>Sign out</span>
