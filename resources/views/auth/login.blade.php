@@ -19,7 +19,6 @@
         alt="Logo TPAinaja" 
         class="mx-auto w-32 mb-4 drop-shadow-md"
       >
-      <h2 class="text-xl font-semibold text-gray-700 mt-2">HI, ADMIN</h2>
       <p class="text-gray-500 text-base mt-1">Welcome Back,<br>You have been missed</p>
     </div>
 
