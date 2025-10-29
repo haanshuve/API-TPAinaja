@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Enum;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,10 @@ class AuthController extends Controller
     // 🟨 Proses login (POST)
     public function login(Request $request)
     {
+        $role = $request->validate([
+            'role' => 'required|enum|"admin,staff"'
+        ]
+    );
         $credentials = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',

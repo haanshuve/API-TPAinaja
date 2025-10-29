@@ -26,6 +26,12 @@
     <form method="POST" action="/login" class="space-y-4">
       @csrf
       <div>
+        <select name="role" id="role" placeholder="Pilih Role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none " required>
+          <option value="role">admin</option>
+          <option value="role">staff</option>
+        </select>
+      </div>
+      <div>
         <input type="text" name="email" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
       </div>
       <div>
