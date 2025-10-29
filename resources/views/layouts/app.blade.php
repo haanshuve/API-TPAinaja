@@ -8,10 +8,6 @@
     <title>@yield('title') - TPAinaja</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a2c34e8fdc.js" crossorigin="anonymous"></script>
-
-    <style>
-        [x-cloak] { display: none !important; }
-    </style>
 </head>
 
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
@@ -66,12 +62,12 @@
             </nav>
         </div>
 
-        <div class="px-4 space-y-3 border-t border-white/50 pt-4">
-            <a href="#" class="flex items-center gap-3 hover:text-white transition">
+        <div class="px-4 space-y-3 border-t border-gray-200 pt-4">
+            {{-- <a href="#" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
                 <i class="fas fa-cog w-5 text-center"></i>
                 <span>Settings</span>
-            </a>
-            <a href="{{ route('logout') }}" class="flex items-center gap-3 hover:text-white transition">
+            </a> --}}
+            <a href="{{ route('logout') }}" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
                 <i class="fas fa-sign-out-alt w-5 text-center"></i>
                 <span>Sign out</span>
             </a>

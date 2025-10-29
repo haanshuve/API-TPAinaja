@@ -19,7 +19,7 @@ use App\Http\Controllers\ProfileController;
 // 🏠 1️⃣ Landing Page (Public)
 //
 Route::get('/', function () {
-    return view('landing');
+    return view('welcome');
 })->name('home');
 
 //
