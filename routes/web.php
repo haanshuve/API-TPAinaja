@@ -9,12 +9,6 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes - TPAinaja Admin Panel (Final Fixed)
-|--------------------------------------------------------------------------
-*/
-
 //
 // 🏠 1️⃣ Landing Page (Public)
 //
@@ -29,6 +23,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login.post');
     Route::get('/logout', 'logout')->name('logout');
+    Route::get('/password/reset', [AuthController::class, 'forgotpswd'])->name('password.request');
+Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
 });
 
 //

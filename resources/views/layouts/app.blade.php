@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - TPAinaja</title>
+    <title>@yield('title') TPAinaja</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a2c34e8fdc.js" crossorigin="anonymous"></script>
 </head>
@@ -17,8 +17,7 @@
         <div>
             <!-- Logo -->
             <div class="flex items-center gap-3 px-6 mb-10">
-                <img src="{{ asset('images/logo-tpainaja.png') }}" alt="TPAinaja Logo" class="w-10 h-10">
-                <span class="font-bold text-lg text-gray-800">TPAinaja</span>
+                <img src="{{ asset('images/logo-tpainaja.png') }}" alt="TPAinaja Logo" class="w-30 h-20">
             </div>
 
             <!-- Navigasi -->
@@ -67,7 +66,7 @@
                 <i class="fas fa-cog w-5 text-center"></i>
                 <span>Settings</span>
             </a> --}}
-            <a href="{{ route('logout') }}" class="flex items-center gap-3 text-yellow-500 hover:text-yellow-600 transition">
+            <a href="{{ route('logout') }}" class="flex items-center gap-3 text-black-500 hover:text-yellow-600 transition">
                 <i class="fas fa-sign-out-alt w-5 text-center"></i>
                 <span>Sign out</span>
             </a>
