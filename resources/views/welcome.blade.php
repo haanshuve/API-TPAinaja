@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CBT dan TPA Polibatam</title>
+  <title>TPAinaja</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome for Icons -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -69,6 +69,7 @@
       <!-- Card Template -->
       <div class="bg-[#F8C200] soft-shadow rounded-lg p-6 w-[320px] h-[200px] text-center flex flex-col justify-center hover:scale-[1.02] transition">
         <img src="{{ asset('images/sky.png') }}" class="w-[76px] h-[72px] mb-3 mx-auto" alt="Sky Illustration" />
+        <h3 class="font-bold text-gray-800 mb-1">Math exam</h3>
         <p class="text-gray-800 text-[15px] leading-snug px-2">
           Sky was cloudless and of a deep dark blue spectacle before us was indeed
         </p>
