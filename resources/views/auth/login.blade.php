@@ -25,36 +25,39 @@
     <!-- Form -->
     <form method="POST" action="/login" class="space-y-4">
       @csrf
+      <!-- Role Selection -->
       <div>
-        <select name="role" id="role" placeholder="Pilih Role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none " required>
-          <option value="role">admin</option>
-          <option value="role">staff</option>
+        <select name="role" id="role" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
+          <option value="admin">Admin</option>
+          <option value="staff">Staff</option>
         </select>
       </div>
+
+      <!-- Email Input -->
       <div>
         <input type="text" name="email" placeholder="Username" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
       </div>
+
+      <!-- Password Input -->
       <div>
         <input type="password" name="password" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" required>
       </div>
+
+      <!-- Login Error Message -->
       @error('loginError')
         <p class="text-red-500 text-sm">{{ $message }}</p>
       @enderror
 
+      <!-- Forgot Password Link -->
       <div class="text-right">
-        <a href="#" class="text-sm text-yellow-600 hover:underline">Forgot Password?</a>
+        <a href="{{ route('password.request') }}" class="text-sm text-yellow-600 hover:underline">Forgot Password?</a>
       </div>
 
-      <!-- Tombol Login Warna Kuning -->
-      <button type="submit" 
-        class="w-full bg-yellow-400 text-gray-900 font-semibold py-2 rounded-md hover:bg-yellow-500 transition">
+      <!-- Login Button -->
+      <button type="submit" class="w-full bg-yellow-400 text-gray-900 font-semibold py-2 rounded-md hover:bg-yellow-500 transition">
         LOGIN
       </button>
 
-      <p class="text-center text-sm mt-4 text-gray-700">
-        Don’t have an account?
-        <a href="#" class="font-semibold text-yellow-600 hover:underline">Register Now</a>
-      </p>
     </form>
   </div>
 
