@@ -35,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile-modal', function () {
+    return view('modal.modalprofile');
+    })->name('modal.profile');
+
 
     // =======================
     // ✳️ Exam CRUD
