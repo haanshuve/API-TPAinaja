@@ -19,6 +19,9 @@ class Question extends Model
         'correct_answer',
     ];
 
+    /**
+     * Relasi: Satu soal milik satu ujian (Exam)
+     */
     public function exam()
     {
         return $this->belongsTo(Exam::class);
