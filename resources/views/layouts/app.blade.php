@@ -8,6 +8,12 @@
     <title>@yield('title') TPAinaja</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a2c34e8fdc.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS (termasuk Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+
 </head>
 
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
@@ -87,9 +93,8 @@
                 </select>
 
                 <!-- 🔘 Tombol Profil -->
-                <button 
-    onclick="loadProfileModal()" 
-    class="w-10 h-10 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold rounded-full flex items-center justify-center shadow-md">
+                @include('modal.modalprofile')
+                <button type="button" data-bs-toggle="modal" data-bs-target="#openprofile" class="w-10 h-10 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold rounded-full flex items-center justify-center shadow-md">
     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
 </button>
             </div>
