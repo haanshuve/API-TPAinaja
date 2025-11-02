@@ -33,7 +33,7 @@
 
             <!-- 🔸 Navigasi -->
             <nav class="space-y-2 px-4 font-medium">
-                <a href="{{ route('dashboard') }}" 
+                <a href="{{ route('modom.dashboard') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition 
                    {{ request()->routeIs('dashboard') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-home w-5 text-center"></i> <span>Dashboard</span>
