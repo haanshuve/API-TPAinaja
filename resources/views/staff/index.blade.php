@@ -47,40 +47,12 @@
             </tr>
         </thead>
         <tbody>
-            @php
-                $staffs = [
-                    ['id' => 1, 'nama' => 'Jhon', 'email' => 'Jhon@gmail.com'],
-                    ['id' => 2, 'nama' => 'Polibatam', 'email' => 'Jhon@gmail.com'],
-                    ['id' => 3, 'nama' => 'Avyz', 'email' => 'Jhon@gmail.com'],
-                    ['id' => 4, 'nama' => 'Destia', 'email' => 'Jhon@gmail.com'],
-                ];
-            @endphp
-
-            @forelse ($staffs as $staff)
-            <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
-                <td class="py-3 text-gray-500 font-medium">#{{ $staff['id'] }}</td>
-                <td class="py-3 font-medium text-gray-800">{{ $staff['nama'] }}</td>
-                <td class="py-3 text-gray-700">{{ $staff['email'] }}</td>
-                <td class="py-3 text-center">
-                    <div class="flex justify-center items-center gap-3">
-                        <a href="#" class="text-blue-500 hover:text-blue-600 text-lg transition">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="text-red-500 hover:text-red-600 text-lg transition">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-            @empty
             <tr>
                 <td colspan="4" class="text-center text-gray-400 italic py-6">
                     Belum ada staff terdaftar
                 </td>
             </tr>
-            @endforelse
         </tbody>
     </table>
 </div>
 @endsection
-    
