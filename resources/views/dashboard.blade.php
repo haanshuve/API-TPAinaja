@@ -53,7 +53,7 @@
             }
         });
 
-        // Chart Peserta
+        // Chart user
         new Chart(document.getElementById('chartPeserta'), {
             type: 'bar',
             data: {
@@ -61,12 +61,12 @@
                 datasets: [{
                     data: pesertaData,
                     backgroundColor: 'rgba(234, 179, 8, 0.7)',
-                    borderRadius: 6
+                    borderRadius: 3
                 }]
             },
             options: {
                 plugins: { legend: { display: false } },
-                scales: { y: { display: false }, x: { display: true } }
+                scales: { y: { display: true }, x: { display: false } }
             }
         });
     </script>

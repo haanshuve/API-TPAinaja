@@ -25,7 +25,7 @@ class DashboardController extends Controller
             ->groupBy('hari')
             ->pluck('total', 'hari');
 
-        return view('/dashboard', [
+        return view('dashboard', [
             'totalUjian' => $totalUjian,
             'totalPeserta' => $totalPeserta,
             'ujianLabels' => $ujianPerHari->keys(),

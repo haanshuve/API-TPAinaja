@@ -3,69 +3,79 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
-    // 🟦 Menampilkan halaman login (GET)
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // 🟨 Proses login (POST)
+    // 🔒 Register hanya bisa dilakukan oleh admin
+    public function register(Request $request)
+    {
+        $currentUser = $request->user();
+
+        // Pastikan yang akses adalah admin
+        if (!$currentUser || $currentUser->role !== 'admin') {
+            return response()->json([
+                'message' => 'Hanya admin yang dapat membuat akun baru.'
+            ], 403);
+        }
+
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role' => 'required|string|in:staff,admin', // optional: biar admin bisa buat role lain
+        ]);
+
+        $user = User::create([
+            'name' => $fields['name'],
+            'email' => $fields['email'],
+            'password' => bcrypt($fields['password']),
+            'role' => $fields['role'],
+        ]);
+
+        return response()->json([
+            'message' => 'Akun baru berhasil dibuat oleh admin.',
+            'user' => $user,
+        ], 201);
+    }
+
     public function login(Request $request)
     {
-        // Validate role input to ensure it is either 'admin' or 'staff'
-        $request->validate([
-            'role' => 'required|in:admin,staff', // Ensure role is either 'admin' or 'staff'
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
         ]);
 
-        // Extract the credentials
-        $credentials = $request->only('email', 'password');
+        $user = User::where('email', $fields['email'])->first();
 
-        // Check if credentials are valid
-        if (Auth::attempt($credentials)) {
-            // Regenerate session to protect against session fixation
-            $request->session()->regenerate();
-
-            // Redirect to intended page (e.g., dashboard)
-            return redirect()->intended('/dashboard');
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return response(['message' => 'Login gagal!'], 401);
         }
 
-        return back()->withErrors([
-            'loginError' => 'Email atau password salah',
-        ])->onlyInput('email');
+        $token = $user->createToken('mobile-token')->plainTextToken;
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ], 200);
     }
 
-    // 🟩 Menampilkan halaman untuk reset password
-    public function forgotpswd()
+    public function user(Request $request)
     {
-        return view('auth.passwords'); // Default Laravel password reset view
+        return response()->json($request->user());
     }
 
-    // 🟪 Proses pengiriman email reset password
-    public function sendResetLinkEmail(Request $request)
+    public function logout(Request $request)
     {
-        // Validate the email input
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        // Send the reset password link
-        $response = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        // Check if the email was sent successfully
-        if ($response == Password::RESET_LINK_SENT) {
-            return back()->with('status', 'We have emailed your password reset link!');
-        }
-
-        return back()->withErrors(['email' => 'Unable to send reset link. Please try again later.']);
+        $request->user()->tokens()->delete();
+        return ['message' => 'Logout berhasil'];
     }
 
     // 🟩 Dashboard utama
@@ -77,17 +87,5 @@ class AuthController extends Controller
     public function exam()
     {
         return view('exam.index');
-    }
-
-    // 🔴 Logout
-    public function logout(Request $request)
-    {
-        // Log the user out and invalidate session
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        // Redirect to home page after logout
-        return redirect('/');
     }
 }
