@@ -8,6 +8,8 @@ use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
+ use App\Http\Controllers\DashboardController;
+
 
 //
 // 🏠 1️⃣ Landing Page (Public)
@@ -38,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile-modal', function () {
     return view('modal.modalprofile');
     })->name('modal.profile');
+   Route::get('/dashboard', [DashboardController::class, 'index'])->name('modom.dashboard');
+
 
 
     // =======================

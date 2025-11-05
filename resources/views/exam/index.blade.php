@@ -43,12 +43,11 @@
                     </a>
 
                     <!-- Tambah Soal -->
-                    <a href="{{ route('exam.questions', $exam->id) }}"
+                    <a href="{{ route('exam.questNions', $exam->id) }}"
                        class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 text-blue-500 hover:bg-blue-200 transition"
                        title="Tambah Soal">
                         <i class="fas fa-plus"></i>
                     </a>
-
                     <!-- Hapus -->
                     <form action="{{ route('exam.destroy', $exam->id) }}" method="POST"
                           onsubmit="return confirm('Yakin ingin menghapus ujian ini?')" class="inline">

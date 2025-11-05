@@ -41,7 +41,7 @@
     <div class="max-w-7xl mx-auto px-8 mt-14 grid grid-cols-1 md:grid-cols-2 items-center gap-8">
       <!-- Left Content -->
       <div>
-        <p class="text-2xl font-semibold text-gray-800 mb-2">Selamat Dasdsadsadasdsag di</p>
+        <p class="text-2xl font-semibold text-gray-800 mb-2">Selamat di</p>
         <h1 class="text-5xl font-extrabold text-gray-900 leading-tight">
           CBT DAN TPA <br /> POLIBATAM
         </h1>
