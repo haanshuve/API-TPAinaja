@@ -1,4 +1,4 @@
-    <!-- ✅ Modal Tambah Peserta -->
+    <!-- Modal Tambah Peserta -->
     <div x-show="openAdd"
          x-cloak
          x-transition.opacity.duration.300ms

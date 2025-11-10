@@ -19,6 +19,9 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'staff' => \App\Http\Middleware\StaffMiddleware::class,
+
         ],
 
         'api' => [

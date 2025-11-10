@@ -3,25 +3,7 @@
 @section('title', 'Staff')
 
 @section('content')
-<div class="flex justify-between items-center mb-6">
-    <!-- Bagian kiri: Sort -->
-    <div class="flex items-center gap-2">
-        <label for="sort" class="text-gray-600 text-sm">Sort:</label>
-        <select id="sort" class="border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-500 bg-gray-50 cursor-not-allowed" disabled>
-            <option>Last Week</option>
-        </select>
-    </div>
 
-    <!-- Bagian kanan: Notifikasi & Avatar -->
-    <div class="flex items-center gap-4">
-        <button class="text-gray-400 hover:text-gray-600">
-            <i class="fas fa-bell text-lg"></i>
-        </button>
-        <div class="w-8 h-8 bg-[#635BFF] text-white flex items-center justify-center rounded-full font-semibold">
-            {{ strtoupper(substr(Auth::user()->name ?? 'Y', 0, 1)) }}
-        </div>
-    </div>
-</div>
 
 <!-- Judul + Tombol Tambah Staff -->
 <div class="flex justify-between items-center mb-6 mt-2">

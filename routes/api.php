@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\auth\AuthController;
+use App\Http\Controllers\admin\QuestionController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

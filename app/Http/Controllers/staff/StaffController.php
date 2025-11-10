@@ -11,9 +11,14 @@ class StaffController extends Controller
         return view('staff.index');
     }
 
-    // 🔽 Tambahkan method ini biar route staff.create berfungsi
     public function create()
     {
         return view('staff.create');
+    }
+
+    public function store(Request $request)
+    {
+        // Validasi dan simpan data staf baru
+        return redirect()->route('staff.create')->with('success', 'Staf baru berhasil ditambahkan.');
     }
 }

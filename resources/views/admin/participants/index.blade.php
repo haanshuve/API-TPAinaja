@@ -14,7 +14,7 @@
                 <option>This Month</option>
             </select>
 
-            <!-- 🔘 Tombol Tambah Peserta -->
+            <!-- Tombol Tambah Peserta -->
             <button @click="openAdd = true"
                 class="flex items-center gap-2 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-medium px-4 py-2 rounded-md shadow-sm transition">
                 <i class="fas fa-plus-circle"></i>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <!-- 📋 Daftar Peserta -->
+    <!-- Daftar Peserta -->
     <div class="space-y-4">
         @forelse ($participants as $participant)
             <div
