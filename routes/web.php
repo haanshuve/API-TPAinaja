@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 // ========== CONTROLLERS ==========
 use App\Http\Controllers\Auth\AuthController;
 
-use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
 
 use App\Http\Controllers\Staff\StaffDashboardController;
 

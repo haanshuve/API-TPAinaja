@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller; // ← Tambahkan baris ini
+use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
 use App\Models\Exam;
 use App\Models\Question;
