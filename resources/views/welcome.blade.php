@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +14,7 @@
     }
   </style>
 </head>
+
 <body class="bg-white font-sans text-gray-800">
 
   <!-- HEADER -->
@@ -31,10 +33,13 @@
       </nav>
 
       <!-- Login Button -->
-      <a href="{{ route('login') }}" 
-         class="border border-yellow-500 text-yellow-700 px-5 py-1.5 rounded-lg hover:bg-yellow-500 hover:text-white transition">
-        Log in
-      </a>
+      <form action="{{ route('auth.login') }}" method="GET">
+        @csrf
+        <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition">
+          Login
+        </button>
+      </form>
+
     </div>
 
     <!-- Hero Section -->
@@ -48,10 +53,7 @@
         <p class="text-gray-700 mt-4 leading-relaxed text-[15px] max-w-lg">
           Selamat datang di platform ujian online CBT dan TPA Polibatam. Sistem ini dirancang untuk mendukung pelaksanaan tes berbasis komputer yang cepat, aman, dan efisien.
         </p>
-        <a href="#exam" 
-           class="inline-block mt-8 border border-black text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-black hover:text-white transition">
-          EXPLORE ALL
-        </a>
+        <a href="#exam" class="inline-block mt-8 border border-black text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-black hover:text-white transition">EXPLORE ALL</a>
       </div>
 
       <!-- Right Image -->
@@ -162,4 +164,5 @@
   </footer>
 
 </body>
+
 </html>

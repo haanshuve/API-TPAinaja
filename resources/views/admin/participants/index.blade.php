@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('title', 'Peserta')
 
@@ -45,14 +45,14 @@
                     <!-- Tombol Edit dan Hapus -->
 <div class="flex items-center gap-3 z-10 relative">
     <!-- Edit -->
-    <a href="{{ route('participants.edit', $participant->id) }}"
+    <a href="{{ route('admin.participants.edit', $participant->id) }}"
         class="w-9 h-9 flex items-center justify-center rounded-full bg-[#FFF8E1] shadow-md hover:shadow-lg hover:scale-105 transition duration-200"
         title="Edit Peserta">
         <i class="fas fa-pen text-[#FBBF24] text-[14px]"></i>
     </a>
 
     <!-- Hapus -->
-    <form action="{{ route('participants.destroy', $participant->id) }}" method="POST"
+    <form action="{{ route('admin.participants.destroy', $participant->id) }}" method="POST"
         onsubmit="return confirm('Yakin ingin menghapus peserta ini?')" class="inline-block z-10 relative">
         @csrf
         @method('DELETE')

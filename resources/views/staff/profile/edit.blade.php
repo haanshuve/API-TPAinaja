@@ -1,4 +1,6 @@
-@extends('layouts.app')
+<!-- resources/views/profile/edit.blade.php -->
+
+@extends('staff.layouts.app')
 
 @section('title', 'Edit Profil')
 
@@ -8,7 +10,7 @@
         <i class="fas fa-user-edit text-[#FACC15]"></i> Edit Profil
     </h2>
 
-    <!-- ✅ Alert Sukses -->
+    <!-- Success Alert -->
     @if(session('success'))
         <div class="mb-5 flex items-center gap-2 p-3 rounded-lg bg-green-50 border border-green-300 text-green-700">
             <i class="fas fa-check-circle text-green-500 text-lg"></i>
@@ -16,11 +18,11 @@
         </div>
     @endif
 
-    <form id="profileForm" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    <form id="profileForm" action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('PUT')
 
-        <!-- 🖼️ Foto Profil -->
+        <!-- Profile Picture -->
         <div class="flex items-center gap-5">
             <img id="profile-preview"
                  src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('images/default-avatar.png') }}" 
@@ -39,7 +41,7 @@
             </div>
         </div>
 
-        <!-- 🧾 Form Nama & Alamat -->
+        <!-- Name & Address Fields -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
@@ -60,7 +62,7 @@
             </div>
         </div>
 
-        <!-- ☎️ Form Telepon & Email -->
+        <!-- Phone & Email Fields -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Telepon</label>
@@ -81,7 +83,7 @@
             </div>
         </div>
 
-        <!-- 🔘 Tombol Aksi -->
+        <!-- Submit Button -->
         <div class="flex justify-end items-center gap-3 pt-5 border-t border-gray-100">
             <a href="{{ url()->previous() }}" 
                class="px-5 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all">Batal</a>
@@ -98,11 +100,11 @@
     </form>
 </div>
 
-<!-- 🪄 Script Preview & Spinner -->
+<!-- Profile Preview Script -->
 <script>
 function previewProfile(event) {
     const reader = new FileReader();
-    reader.onload = function(){
+    reader.onload = function() {
         document.getElementById('profile-preview').src = reader.result;
     };
     reader.readAsDataURL(event.target.files[0]);

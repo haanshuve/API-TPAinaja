@@ -16,7 +16,7 @@ class ExamController extends Controller
     public function index()
     {
         $exams = Exam::latest()->get();
-        return view('exam.index', compact('exams'));
+        return view('admin.exam.index', compact('exams'));
     }
 
     /**
@@ -24,7 +24,7 @@ class ExamController extends Controller
      */
     public function create()
     {
-        return view('exam.create');
+        return view('admin.exam.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class ExamController extends Controller
 
         Exam::create($validated);
 
-        return redirect()->route('exam.index')->with('success', 'Ujian berhasil ditambahkan!');
+        return redirect()->route('admin.exam.index')->with('success', 'Ujian berhasil ditambahkan!');
     }
 
     /**

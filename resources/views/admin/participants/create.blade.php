@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('title', 'Tambah Peserta')
 

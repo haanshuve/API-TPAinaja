@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('title', 'Ujian')
 
@@ -7,7 +7,7 @@
     <!-- Header -->
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-800">Ujian</h1>
-        <a href="{{ route('exam.create') }}"
+        <a href="{{ route('admin.exam.create') }}"
            class="flex items-center gap-2 border border-indigo-500 text-indigo-600 font-medium px-4 py-2 rounded-md hover:bg-indigo-50 transition">
             <i class="fas fa-plus"></i>
             Buat ujian
@@ -36,20 +36,20 @@
                 <!-- Tombol Aksi -->
                 <div class="flex items-center justify-center gap-3">
                     <!-- Edit -->
-                    <a href="{{ route('exam.edit', $exam->id) }}"
+                    <a href="{{ route('admin.exam.edit', $exam->id) }}"
                        class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-100 text-yellow-500 hover:bg-yellow-200 transition"
                        title="Edit Ujian">
                         <i class="fas fa-pen"></i>
                     </a>
 
                     <!-- Tambah Soal -->
-                    <a href="{{ route('exam.questNions', $exam->id) }}"
+                    <a href="{{ route('admin.exam.questNions', $exam->id) }}"
                        class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-100 text-blue-500 hover:bg-blue-200 transition"
                        title="Tambah Soal">
                         <i class="fas fa-plus"></i>
                     </a>
                     <!-- Hapus -->
-                    <form action="{{ route('exam.destroy', $exam->id) }}" method="POST"
+                    <form action="{{ route('admin.exam.destroy', $exam->id) }}" method="POST"
                           onsubmit="return confirm('Yakin ingin menghapus ujian ini?')" class="inline">
                         @csrf
                         @method('DELETE')

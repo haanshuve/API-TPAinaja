@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.layouts.app')
 
 @section('content')
 <div class="p-6">
@@ -8,7 +8,7 @@
             Soal Ujian: <span class="text-yellow-600">{{ $exam->nama_ujian ?? $exam->name }}</span>
         </h2>
 
-        <a href="{{ route('questions.create', $exam->id) }}"
+        <a href="{{ route('staff.questions.create', $exam->id) }}"
            class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 transition duration-200 ease-in-out">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                  stroke="currentColor" stroke-width="2">
@@ -44,10 +44,10 @@
                     <td class="py-3 px-4 border-b">{{ $q->correct_answer }}</td>
                     <td class="py-3 px-4 border-b text-center">
                         <div class="flex justify-center space-x-3">
-                            <a href="{{ route('questions.edit', [$exam->id, $q->id]) }}"
+                            <a href="{{ route('staff.questions.edit', [$exam->id, $q->id]) }}"
                                class="text-blue-600 font-medium hover:text-blue-800">Edit</a>
 
-                            <form action="{{ route('questions.destroy', [$exam->id, $q->id]) }}" method="POST" class="inline">
+                            <form action="{{ route('staff.questions.destroy', [$exam->id, $q->id]) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"

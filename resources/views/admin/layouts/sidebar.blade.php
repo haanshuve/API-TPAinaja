@@ -32,31 +32,31 @@
 
             <!-- 🔸 Navigasi -->
             <nav class="space-y-2 px-4 font-medium">
-                <a href="{{ route('modom.dashboard') }}" 
+                <a href="{{ route('admin.dashboard') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition 
                    {{ request()->routeIs('dashboard') ? 'bg-white text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-home w-5 text-center"></i> <span>Dashboard</span>
                 </a>
 
-                <a href="{{ route('exam.index') }}" 
+                <a href="{{ route('admin.exam.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                    {{ request()->routeIs('exam.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-book w-5 text-center"></i> <span>Ujian</span>
                 </a>
 
-                <a href="{{ route('participants.index') }}" 
+                <a href="{{ route('admin.participants.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                    {{ request()->routeIs('participants.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-users w-5 text-center"></i> <span>Peserta</span>
                 </a>
 
-                <a href="{{ route('staff.index') }}" 
+                <a href="{{ route('admin.staff.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                    {{ request()->routeIs('staff.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-user-tie w-5 text-center"></i> <span>Staff</span>
                 </a>
 
-                <a href="{{ route('reports.index') }}" 
+                <a href="{{ route('admin.reports.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                    {{ request()->routeIs('reports.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-file-alt w-5 text-center"></i> <span>Reports</span>
@@ -65,12 +65,11 @@
         </div>
 
         <!-- 🔸 Tombol Sign Out -->
-        <div class="px-4 space-y-3 border-t border-gray-200 pt-4">
-            <a href="{{ route('logout') }}" 
-               class="flex items-center gap-3 text-black hover:text-yellow-600 transition">
-                <i class="fas fa-sign-out-alt w-5 text-center"></i> <span>Sign out</span>
-            </a>
-        </div>
+        <form action="{{ route('admin.logout') }}" method="POST">
+             @csrf
+            <button type="submit">Logout</button>
+        </form>
+
     </aside>
 
     <!-- ✅ MAIN CONTENT -->

@@ -1,57 +1,41 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
-@section('title', 'Tambah Staff')
+@section('title', 'Tambah Staf Baru')
 
 @section('content')
+<div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mt-6">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Tambah Staf Baru</h2>
 
-
-<!-- CARD FORM -->
-<div class="bg-white rounded-2xl shadow-md p-0 max-w-3xl mx-auto">
-    <!-- Header Kuning -->
-    <div class="bg-yellow-400 text-gray-800 font-semibold px-6 py-3 rounded-t-2xl">
-        Tambah Staff
-    </div>
-
-    <!-- Isi Form -->
-    <form action="#" method="POST" class="p-6">
+    <!-- Form for Adding a New Staff -->
+    <form action="{{ route('admin.staff.store') }}" method="POST">
         @csrf
 
-        <!-- Nama -->
-        <div class="mb-5">
-            <label for="nama" class="block text-gray-700 font-medium mb-2">Nama</label>
-            <input type="text" id="nama" name="nama" placeholder="Masukkan nama staff"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        <!-- Name Field -->
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
+            <input type="text" name="name" id="name" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
         </div>
 
-        <!-- Email -->
-        <div class="mb-5">
-            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-            <input type="email" id="email" name="email" placeholder="Masukkan email staff"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        <!-- Email Field -->
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" id="email" class="w-full border border-gray-300 rounded-md px-3 py-2" required>
         </div>
 
-<!-- Role -->
-<div class="mb-5">
-    <label for="role" class="block text-gray-700 font-medium mb-2">Role</label>
-    <select id="role" name="role" 
-        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        <option value="" disabled selected>Pilih role staff</option>
-        @foreach ($roles as $role)
-            <option value="{{ $role->id }}">{{ $role->nama_role }}</option>
-        @endforeach
-    </select>
-</div>
+        <!-- Role Field (Dropdown) -->
+        <div class="mb-4">
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <select name="role" id="role" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                @foreach($roles as $role)
+                    <option value="{{ $role }}">{{ ucfirst($role) }}</option>
+                @endforeach
+            </select>
+        </div>
 
-
-        <!-- Tombol Aksi -->
-        <div class="flex justify-end gap-3 mt-6">
-            <a href="{{ route('staff.index') }}"
-                class="bg-red-500 text-white px-5 py-2 rounded-md font-medium hover:bg-red-600 transition">
-                Batal
-            </a>
-            <button type="submit"
-                class="bg-blue-500 text-white px-5 py-2 rounded-md font-medium hover:bg-blue-600 transition">
-                Simpan
+        <!-- Submit Button -->
+        <div class="flex justify-end">
+            <button type="submit" class="px-5 py-2 rounded-md bg-[#FACC15] hover:bg-[#EAB308] text-gray-900 font-semibold shadow-sm">
+                Simpan Staf
             </button>
         </div>
     </form>

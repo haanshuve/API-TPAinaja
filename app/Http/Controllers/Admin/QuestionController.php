@@ -29,7 +29,7 @@ class QuestionController extends Controller
         }
 
         // Jika dari web (Blade)
-        return view('questions.index', compact('exam', 'questions'));
+        return view('admin.questions.index', compact('exam', 'questions'));
     }
 
     /**
@@ -38,7 +38,7 @@ class QuestionController extends Controller
     public function create($exam_id)
     {
         $exam = Exam::findOrFail($exam_id);
-        return view('questions.create', compact('exam'));
+        return view('admin.questions.create', compact('exam'));
     }
 
     /**
@@ -69,7 +69,7 @@ class QuestionController extends Controller
         }
 
         // Jika dari web
-        return redirect()->route('questions.index', $exam_id)
+        return redirect()->route('admin.questions.index', $exam_id)
                          ->with('success', 'Soal berhasil ditambahkan!');
     }
 }
