@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\staff;
 
+use App\Http\Controllers\Controller;
 use App\Models\Exam;
 use App\Models\Participant;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class DashboardController extends Controller
             ->groupBy('hari')
             ->pluck('total', 'hari');
 
-        return view('dashboard', [
+        return view('staff.dashboard', [
             'totalUjian' => $totalUjian,
             'totalPeserta' => $totalPeserta,
             'ujianLabels' => $ujianPerHari->keys(),

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Exam;
-use App\Models\Question; // ⬅️ Tambahkan ini untuk ambil data soal
+use App\Models\Question; 
 use Illuminate\Support\Facades\Storage;
 
 class ExamController extends Controller

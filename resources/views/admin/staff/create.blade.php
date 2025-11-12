@@ -3,26 +3,7 @@
 @section('title', 'Tambah Staff')
 
 @section('content')
-<!-- HEADER ATAS (Sort & Avatar) -->
-<div class="flex justify-between items-center mb-6">
-    <!-- Sort -->
-    <div class="flex items-center gap-2">
-        <label for="sort" class="text-gray-600 text-sm">Sort:</label>
-        <select id="sort" class="border border-gray-300 rounded-md px-3 py-1 text-sm text-gray-500 bg-gray-50 cursor-not-allowed" disabled>
-            <option>Last Week</option>
-        </select>
-    </div>
 
-    <!-- Notifikasi & Avatar -->
-    <div class="flex items-center gap-4">
-        <button class="text-gray-400 hover:text-gray-600">
-            <i class="fas fa-bell text-lg"></i>
-        </button>
-        <div class="w-8 h-8 bg-[#635BFF] text-white flex items-center justify-center rounded-full font-semibold">
-            {{ strtoupper(substr(Auth::user()->name ?? 'Y', 0, 1)) }}
-        </div>
-    </div>
-</div>
 
 <!-- CARD FORM -->
 <div class="bg-white rounded-2xl shadow-md p-0 max-w-3xl mx-auto">
@@ -49,18 +30,18 @@
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <!-- Role -->
-        <div class="mb-5">
-            <label for="role" class="block text-gray-700 font-medium mb-2">Role</label>
-            <select id="role" name="role"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                <option selected disabled>Pilih Role</option>
-                <option>Admin</option>
-                <option>Pengawas</option>
-                <option>Penguji</option>
-                <option>Petugas TPA</option>
-            </select>
-        </div>
+<!-- Role -->
+<div class="mb-5">
+    <label for="role" class="block text-gray-700 font-medium mb-2">Role</label>
+    <select id="role" name="role" 
+        class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        <option value="" disabled selected>Pilih role staff</option>
+        @foreach ($roles as $role)
+            <option value="{{ $role->id }}">{{ $role->nama_role }}</option>
+        @endforeach
+    </select>
+</div>
+
 
         <!-- Tombol Aksi -->
         <div class="flex justify-end gap-3 mt-6">

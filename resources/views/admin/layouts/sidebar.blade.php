@@ -23,8 +23,7 @@
 
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
 
-    <!-- ✅ SIDEBAR -->
-    <aside class="w-64 bg-[#FACC15] flex flex-col justify-between py-6 text-gray-800">
+    <aside class="w-64 bg-[#FFC100] flex flex-col justify-between py-6 text-gray-800">
         <div>
             <!-- 🔸 Logo -->
             <div class="flex items-center justify-center mb-10">
@@ -35,31 +34,31 @@
             <nav class="space-y-2 px-4 font-medium">
                 <a href="{{ route('modom.dashboard') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition 
-                   {{ request()->routeIs('dashboard') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
+                   {{ request()->routeIs('dashboard') ? 'bg-white text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-home w-5 text-center"></i> <span>Dashboard</span>
                 </a>
 
                 <a href="{{ route('exam.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('exam.*') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
+                   {{ request()->routeIs('exam.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-book w-5 text-center"></i> <span>Ujian</span>
                 </a>
 
                 <a href="{{ route('participants.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('participants.*') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
+                   {{ request()->routeIs('participants.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-users w-5 text-center"></i> <span>Peserta</span>
                 </a>
 
                 <a href="{{ route('staff.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('staff.*') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
+                   {{ request()->routeIs('staff.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-user-tie w-5 text-center"></i> <span>Staff</span>
                 </a>
 
                 <a href="{{ route('reports.index') }}" 
                    class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('reports.*') ? 'bg-white text-[#FACC15]' : 'hover:bg-white/40' }}">
+                   {{ request()->routeIs('reports.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
                     <i class="fas fa-file-alt w-5 text-center"></i> <span>Reports</span>
                 </a>
             </nav>

@@ -1,14 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use App\Http\Controllers\Controller; // ← Tambahkan baris ini
+
 
 class AuthController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
  
     public function register(Request $request)
     {
@@ -37,34 +44,27 @@ class AuthController extends Controller
     }
 
    
-    public function login(Request $request)
-    {
-   
-        $credentials = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+public function login(Request $request)
+{
+    // Validasi input
+    $credentials = $request->validate([
+        'email' => 'required|string|email',
+        'password' => 'required|string',
+    ]);
 
-    
-        $user = User::where('email', $credentials['email'])->first();
-
-             if (!$user || !Hash::check($credentials['password'], $user->password)) {
-                  throw ValidationException::withMessages([
-                'email' => ['Email atau password tidak cocok.'],
-            ]);
-        }
-
-        $user->tokens()->delete();
-
-
-        $token = $user->createToken('mobile-token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login berhasil dan hash password tervalidasi.',
-            'user' => $user,
-            'token' => $token,
-        ]);
+    // Coba autentikasi user
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate(); 
+        return redirect()->intended('/dashboard')
+            ->with('success', 'Login berhasil!');
     }
+
+    // Jika gagal
+    return back()->withErrors([
+        'email' => 'Email atau password tidak cocok.',
+    ])->onlyInput('email');
+}
+
     public function user(Request $request)
     {
         return response()->json(['user' => $request->user()]);
@@ -76,4 +76,5 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Logout berhasil, token dihapus.']);
     }
+    
 }

@@ -16,7 +16,7 @@
 <body class="bg-white font-sans text-gray-800">
 
   <!-- HEADER -->
-  <header class="bg-gradient-to-b from-white to-[#FFF5CC] pb-20">
+  <header class="bg-linear-to-b from-white to-[#FFF5CC] pb-20">
     <div class="max-w-7xl mx-auto px-8 pt-8 flex justify-between items-center">
       <!-- Logo -->
       <div class="flex items-center space-x-2">
