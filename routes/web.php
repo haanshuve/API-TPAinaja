@@ -10,10 +10,12 @@ use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\AdminController;
 
-use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\staff\DashboardController;
+use App\Http\Controllers\staff\QuestionController as StaffQuestionController;
+
+use App\Http\Controllers\ProfileController;
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\StaffMiddleware;
@@ -78,7 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('staff')->name('staff.')->group(function () {
 
     // ---------- AUTH ----------
-    Route::controller(StaffAuthController::class)->group(function () {
+    Route::controller(AuthController::class)->group(function () {
         Route::get('/login', 'showLoginForm')->name('login');
         Route::post('/login', 'login')->name('login.post');
         Route::post('/logout', 'logout')->name('logout');
@@ -86,7 +88,9 @@ Route::prefix('staff')->name('staff.')->group(function () {
 
     // ---------- PROTECTED ----------
     Route::middleware(['auth', 'staff'])->group(function () {
-        Route::get('/dashboard', [StaffDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
     });
+
+    Route::get('/questions', [StaffQuestionController::class, 'index'])->name('questions.index');
 });

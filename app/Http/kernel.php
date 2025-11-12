@@ -19,9 +19,6 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            'staff' => \App\Http\Middleware\StaffMiddleware::class,
-
         ],
 
         'api' => [
@@ -29,5 +26,16 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+    ];
+
+    /**
+     * The application's route middleware.
+     *
+     * @var array<string, class-string|string>
+     */
+    protected $routeMiddleware = [
+        'auth'  => \App\Http\Middleware\Authenticate::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'staff' => \App\Http\Middleware\StaffMiddleware::class,
     ];
 }

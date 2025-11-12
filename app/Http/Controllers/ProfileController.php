@@ -26,7 +26,6 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('profile_picture')) {
-            // Hapus foto lama kalau ada
             if ($user->profile_picture && Storage::exists('public/' . $user->profile_picture)) {
                 Storage::delete('public/' . $user->profile_picture);
             }
