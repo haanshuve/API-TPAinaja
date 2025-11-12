@@ -7,8 +7,7 @@
 
 <!-- Judul + Tombol Tambah Staff -->
 <div class="flex justify-between items-center mb-6 mt-2">
-    <h1 class="text-2xl font-bold text-gray-900">Staff</h1>
-
+   
     <!-- Tombol Tambah Staff -->
     <a href="{{ route('admin.staff.create') }}" 
        class="flex items-center gap-2 border border-[#635BFF] text-[#635BFF] font-medium px-4 py-2 rounded-lg hover:bg-[#635BFF] hover:text-white transition">

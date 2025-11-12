@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('content')
 <div class="p-6">
@@ -13,7 +13,7 @@
 
     {{-- Form Edit --}}
     <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-3xl">
-        <form action="{{ route('exam.update', $exam->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.exam.update', $exam->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -58,7 +58,7 @@
 
             {{-- Tombol Aksi --}}
             <div class="flex justify-end space-x-3">
-                <a href="{{ route('exam.index') }}"
+                <a href="{{ route('admin.exam.index') }}"
                    class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Batal</a>
 
                 <button type="submit"

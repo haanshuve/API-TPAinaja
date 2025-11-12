@@ -6,20 +6,12 @@
 <div class="min-h-screen bg-[#F8FAFC] px-8 py-6" x-data="{ openAdd: false }">
     <!-- Header Page -->
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Peserta</h1>
-
-        <div class="flex items-center space-x-3">
-            <select class="border border-gray-300 rounded-md text-sm px-3 py-1 text-gray-600">
-                <option>Last Week</option>
-                <option>This Month</option>
-            </select>
-
+        <div class="flex items-center space-x-3">           
             <!-- Tombol Tambah Peserta -->
-            <button @click="openAdd = true"
-                class="flex items-center gap-2 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-medium px-4 py-2 rounded-md shadow-sm transition">
-                <i class="fas fa-plus-circle"></i>
+            <a href="{{ route('admin.participants.create') }}"
+                class="flex items-center gap-2 border border-[#635BFF] text-[#635BFF] font-medium px-4 py-2 rounded-lg hover:bg-[#635BFF] hover:text-white transition">                <i class="fas fa-plus-circle"></i>
                 Tambah Peserta
-            </button>
+        </a>
         </div>
     </div>
 
