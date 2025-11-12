@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('title', 'Tambah Report')
 
@@ -70,7 +70,7 @@
 
         <!-- Tombol -->
         <div class="flex justify-end gap-3 mt-6">
-            <a href="{{ route('reports.index') }}"
+            <a href="{{ route('admin.reports.index') }}"
                class="bg-red-500 text-white px-6 py-2 rounded-md font-medium hover:bg-red-600 transition">
                 Batal
             </a>

@@ -12,14 +12,16 @@
 
         <!-- Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- Card for Total Ujian -->
             <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition">
                 <h2 class="text-gray-400 mb-1 font-medium">Ujian</h2>
                 <h3 class="text-3xl font-bold mb-4 text-gray-900">{{ $totalUjian }}</h3>
                 <canvas id="chartUjian" height="120"></canvas>
             </div>
 
+            <!-- Card for Total Peserta -->
             <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition">
-                <h2 class="text-gray-400 mb-1 font-medium">user</h2>
+                <h2 class="text-gray-400 mb-1 font-medium">User</h2>
                 <h3 class="text-3xl font-bold mb-4 text-gray-900">{{ $totalPeserta }}</h3>
                 <canvas id="chartPeserta" height="120"></canvas>
             </div>
@@ -30,43 +32,54 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const ujianLabels = @json($ujianLabels);
-        const ujianData = @json($ujianData);
+        // Data passed from the controller
+        const ujianLabels = @json($ujianLabels);  // Array of labels for Ujian chart
+        const ujianData = @json($ujianData);      // Array of data for Ujian chart
 
-        const pesertaLabels = @json($pesertaLabels);
-        const pesertaData = @json($pesertaData);
+        const pesertaLabels = @json($pesertaLabels); // Array of labels for Peserta chart
+        const pesertaData = @json($pesertaData);     // Array of data for Peserta chart
 
-        // Chart Ujian
+        // Chart for Ujian
         new Chart(document.getElementById('chartUjian'), {
             type: 'bar',
             data: {
-                labels: ujianLabels,
+                labels: ujianLabels,  // Labels for the X-axis
                 datasets: [{
-                    data: ujianData,
-                    backgroundColor: 'rgba(250, 204, 21, 0.7)',
-                    borderRadius: 6
+                    data: ujianData,  // Data for the bars
+                    backgroundColor: 'rgba(250, 204, 21, 0.7)',  // Bar color
+                    borderRadius: 6  // Rounded corners for bars
                 }]
             },
             options: {
-                plugins: { legend: { display: false } },
-                scales: { y: { display: false }, x: { display: true } }
+                plugins: { 
+                    legend: { display: false }  // Hide legend
+                },
+                scales: { 
+                    y: { display: false },  // Hide Y-axis
+                    x: { display: true }  // Show X-axis
+                }
             }
         });
 
-        // Chart user
+        // Chart for Peserta (User)
         new Chart(document.getElementById('chartPeserta'), {
             type: 'bar',
             data: {
-                labels: pesertaLabels,
+                labels: pesertaLabels,  // Labels for the X-axis
                 datasets: [{
-                    data: pesertaData,
-                    backgroundColor: 'rgba(234, 179, 8, 0.7)',
-                    borderRadius: 3
+                    data: pesertaData,  // Data for the bars
+                    backgroundColor: 'rgba(234, 179, 8, 0.7)',  // Bar color
+                    borderRadius: 3  // Rounded corners for bars
                 }]
             },
             options: {
-                plugins: { legend: { display: false } },
-                scales: { y: { display: true }, x: { display: false } }
+                plugins: { 
+                    legend: { display: false }  // Hide legend
+                },
+                scales: { 
+                    y: { display: true },  // Show Y-axis
+                    x: { display: false }  // Hide X-axis
+                }
             }
         });
     </script>

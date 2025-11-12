@@ -1,20 +1,17 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // ← Tambahkan ini
-use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (auth()->user() && auth()->user()->role === 'admin') {
             return $next($request);
         }
 
-        abort(403, 'Akses khusus admin.');
+        return redirect()->route('staff.dashboard');  // Redirect to staff dashboard
     }
 }

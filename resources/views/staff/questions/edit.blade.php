@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('staff.layouts.app')
 
 @section('content')
 <div class="p-6 max-w-2xl mx-auto">
     <h2 class="text-xl font-semibold mb-4">Edit Soal</h2>
-    <form action="{{ route('questions.update', [$exam->id, $question->id]) }}" method="POST">
+    <form action="{{ route('staff.questions.update', [$exam->id, $question->id]) }}" method="POST">
         @csrf
         @method('PUT')
 

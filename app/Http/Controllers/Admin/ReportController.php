@@ -9,11 +9,11 @@ class ReportController extends Controller
 {
     public function index()
     {
-        return view('reports.index'); // Halaman daftar report
+        return view('admin.reports.index'); // Halaman daftar report
     }
 
     public function create()
     {
-        return view('reports.create'); // Halaman tambah report
+        return view('admin.reports.create'); // Halaman tambah report
     }
 }

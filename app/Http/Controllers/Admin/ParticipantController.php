@@ -9,18 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ParticipantController extends Controller
 {
-    /**
-     * 🟡 Tampilkan daftar peserta
-     */
+
     public function index()
     {
         $participants = Participant::all(); // ambil semua data peserta
-        return view('participants.index', compact('participants'));
+        return view('admin.participants.index', compact('participants'));
     }
 
-    /**
-     * 🟢 Simpan peserta baru
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -35,22 +31,17 @@ class ParticipantController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('participants.index')
+        return redirect()->route('admin.participants.index')
             ->with('success', 'Peserta berhasil ditambahkan!');
     }
 
-    /**
-     * 🟠 Edit peserta
-     */
     public function edit($id)
     {
         $participant = Participant::findOrFail($id);
-        return view('participants.edit', compact('participant'));
+        return view('admin.participants.edit', compact('participant'));
     }
 
-    /**
-     * 🔵 Update peserta
-     */
+
     public function update(Request $request, $id)
     {
         $participant = Participant::findOrFail($id);
@@ -69,19 +60,17 @@ class ParticipantController extends Controller
                 : $participant->password,
         ]);
 
-        return redirect()->route('participants.index')
+        return redirect()->route('admin.participants.index')
             ->with('success', 'Peserta berhasil diperbarui!');
     }
 
-    /**
-     * 🔴 Hapus peserta
-     */
+   
     public function destroy($id)
     {
         $participant = Participant::findOrFail($id);
         $participant->delete();
 
-        return redirect()->route('participants.index')
+        return redirect()->route('admin.participants.index')
             ->with('success', 'Peserta berhasil dihapus yaa!');
     }
 }
