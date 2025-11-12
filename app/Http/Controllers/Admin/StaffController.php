@@ -15,10 +15,11 @@ class StaffController extends Controller
     public function create()
     {
         // Define or retrieve roles (You can replace this with your actual roles, e.g., from a database)
-        $roles = ['admin', 'staff', 'peserta']; // Example roles array
+        $roles = [ 'staff']; 
+         $isDisabled = false; // Set this to `true` when you want to disable it
 
-        // Pass the $roles variable to the view
-        return view('admin.staff.create', compact('roles'));
+    return view('admin.staff.create', compact('roles', 'isDisabled'));
+        
     }
 
     public function store(Request $request)

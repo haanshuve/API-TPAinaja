@@ -56,7 +56,7 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam = Exam::findOrFail($id);
-        return view('exam.edit', compact('exam'));
+        return view('admin.exam.edit', compact('exam'));
     }
 
     /**
@@ -90,7 +90,7 @@ class ExamController extends Controller
 
         $exam->update($validated);
 
-        return redirect()->route('exam.index')->with('success', 'Ujian berhasil diperbarui!');
+        return redirect()->route('admin.exam.index')->with('success', 'Ujian berhasil diperbarui!');
     }
 
     /**
@@ -107,7 +107,7 @@ class ExamController extends Controller
 
         $exam->delete();
 
-        return redirect()->route('exam.index')->with('success', 'Ujian berhasil dihapus!');
+        return redirect()->route('admin.exam.index')->with('success', 'Ujian berhasil dihapus!');
     }
 
     /**
@@ -125,6 +125,6 @@ class ExamController extends Controller
             $questions = [];
         }
 
-        return view('questions.index', compact('exam', 'questions'));
+        return view('admin.questions.index', compact('exam', 'questions'));
     }
 }

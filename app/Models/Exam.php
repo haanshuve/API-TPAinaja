@@ -12,12 +12,12 @@ class Exam extends Model
     // Nama tabel (opsional, bisa dihapus kalau sama dengan nama model jamak)
     protected $table = 'exams';
 
-    protected $fillable = [
-        'nama_ujian',
-        'jumlah_soal',
-        'bobot_nilai',
-        'waktu_ujian',
-        'logo',
+     protected $fillable = [
+        'nama_ujian',           // corresponds to 'nama_ujian'
+        'question_count', // corresponds to 'jumlah_soal'
+        'weight',         // corresponds to 'bobot_nilai'
+        'duration',       // corresponds to 'waktu_ujian'
+        'logo',           // added field for the logo
     ];
 
     /**

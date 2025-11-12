@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-900">Daftar Report</h1>
+    
     <a href="{{ route('admin.reports.create') }}" 
-       class="flex items-center gap-2 bg-[#635BFF] text-white px-4 py-2 rounded-lg hover:bg-[#4f46e5] transition">
+       class="flex items-center gap-2 border border-[#635BFF] text-[#635BFF] font-medium px-4 py-2 rounded-lg hover:bg-[#635BFF] hover:text-white transition">
         <i class="fas fa-plus"></i>
         Tambah Report
     </a>

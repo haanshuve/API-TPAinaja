@@ -9,11 +9,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('participants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamps();
+            $table->id();  // ID utama untuk tabel participants
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relasi dengan tabel users
+            $table->integer('total_score')->default(0);  // Nilai total ujian
+            $table->text('exam_taken')->nullable();  // Riwayat ujian yang sudah diambil
+            $table->enum('status', ['lulus', 'gagal'])->default('gagal');  // Status peserta
+            $table->timestamps();  // Kolom created_at dan updated_at
         });
     }
 

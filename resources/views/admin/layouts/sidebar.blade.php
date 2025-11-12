@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" x-data="{ openProfile: false }">
+<html lang="id" x-data="{ activeMenu: '{{ request()->route()->getName() }}' }">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,32 +33,37 @@
             <!-- 🔸 Navigasi -->
             <nav class="space-y-2 px-4 font-medium">
                 <a href="{{ route('admin.dashboard') }}" 
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition 
-                   {{ request()->routeIs('dashboard') ? 'bg-white text-[#FFFFFF]' : 'hover:bg-white/40' }}">
+                   :class="{'bg-transparent text-[#FFFFFF]': activeMenu === 'admin.dashboard', 'hover:bg-white/40': activeMenu !== 'admin.dashboard'}"
+                   @click="activeMenu = 'admin.dashboard'"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition">
                     <i class="fas fa-home w-5 text-center"></i> <span>Dashboard</span>
                 </a>
 
                 <a href="{{ route('admin.exam.index') }}" 
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('exam.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
+                   :class="{'bg-transparent text-[#FFFFFF]': activeMenu.startsWith('admin.exam'), 'hover:bg-white/40': !activeMenu.startsWith('admin.exam')}"
+                   @click="activeMenu = 'admin.exam.index'"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition">
                     <i class="fas fa-book w-5 text-center"></i> <span>Ujian</span>
                 </a>
 
                 <a href="{{ route('admin.participants.index') }}" 
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('participants.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
+                   :class="{'bg-transparent text-[#FFFFFF]': activeMenu === 'admin.participants.index', 'hover:bg-white/40': activeMenu !== 'admin.participants.index'}"
+                   @click="activeMenu = 'admin.participants.index'"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition">
                     <i class="fas fa-users w-5 text-center"></i> <span>Peserta</span>
                 </a>
 
                 <a href="{{ route('admin.staff.index') }}" 
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('staff.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
+                   :class="{'bg-transparent text-[#FFFFFF]': activeMenu === 'admin.staff.index', 'hover:bg-white/40': activeMenu !== 'admin.staff.index'}"
+                   @click="activeMenu = 'admin.staff.index'"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition">
                     <i class="fas fa-user-tie w-5 text-center"></i> <span>Staff</span>
                 </a>
 
                 <a href="{{ route('admin.reports.index') }}" 
-                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                   {{ request()->routeIs('reports.*') ? ' text-[#FFFFFF]' : 'hover:bg-white/40' }}">
+                   :class="{'bg-transparent text-[#FFFFFF]': activeMenu === 'admin.reports.index', 'hover:bg-white/40': activeMenu !== 'admin.reports.index'}"
+                   @click="activeMenu = 'admin.reports.index'"
+                   class="flex items-center gap-3 px-4 py-2 rounded-lg transition">
                     <i class="fas fa-file-alt w-5 text-center"></i> <span>Reports</span>
                 </a>
             </nav>
@@ -66,8 +71,11 @@
 
         <!-- 🔸 Tombol Sign Out -->
         <form action="{{ route('admin.logout') }}" method="POST">
-             @csrf
-            <button type="submit">Logout</button>
+            @csrf
+            <button type="submit" class="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md w-40 mx-4 font-medium transition">
+                 <i class="fas fa-sign-out-alt mr-2"></i>
+                Logout
+            </button>
         </form>
 
     </aside>

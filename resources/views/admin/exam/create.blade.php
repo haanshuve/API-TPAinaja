@@ -1,17 +1,11 @@
-@extends('layouts.app')
+@extends('admin.layouts.sidebar')
 
 @section('title', 'Buat Ujian')
 
 @section('content')
-<div class="min-h-screen bg-[#F8FAFC] px-8 py-6 flex justify-center">
-    <div class="w-full max-w-3xl bg-white rounded-xl shadow-lg border border-gray-200">
-        <!-- Header -->
-        <div class="bg-yellow-400 text-gray-900 text-lg font-semibold px-6 py-3 rounded-t-xl">
-            Buat Ujian
-        </div>
 
         <div class="p-6">
-            <form action="{{ route('exam.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+            <form action="{{ route('admin.exam.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
 
                 <div>
@@ -45,7 +39,7 @@
                 </div>
 
                 <div class="flex justify-end gap-3 pt-3">
-                    <a href="{{ route('exam.index') }}"
+                    <a href="{{ route('admin.exam.index') }}"
                         class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm">
                         Batal
                     </a>
@@ -57,5 +51,5 @@
             </form>
         </div>
     </div>
-</div>
+
 @endsection
