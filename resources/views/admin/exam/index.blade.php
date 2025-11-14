@@ -29,8 +29,8 @@
 
                 <!-- Detail Ujian -->
                 <h2 class="font-semibold text-gray-800 text-lg mb-1">{{ $exam->nama_ujian }}</h2>
-                <p class="text-gray-500 text-sm mb-1">{{ $exam->jumlah_soal }} Soal</p>
-                <p class="text-gray-400 text-xs mb-4">{{ $exam->waktu_ujian }} menit</p>
+                <p class="text-gray-500 text-sm mb-1">{{ $exam->question_count }} Soal</p>
+                <p class="text-gray-400 text-xs mb-4">{{ $exam->duration }} menit</p>
 
                 <!-- Tombol Aksi -->
                 <div class="flex items-center justify-center gap-3">

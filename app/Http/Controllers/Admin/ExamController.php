@@ -33,11 +33,13 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_ujian'   => 'required|string|max:255',
-            'jumlah_soal'  => 'required|integer|min:1',
-            'bobot_nilai'  => 'required|numeric|min:0',
-            'waktu_ujian'  => 'required|integer|min:1',
-            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_ujian'        => 'required|string|max:255',
+            'questions_count'   => 'required|integer|min:1',
+            'weight'            => 'required|numeric|min:0',
+            'duration'          => 'required|integer|min:1',
+            'exam_type'        => 'required|in:practice,real',
+            'exam_date'        => 'required|date',
+            'logo'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         // Simpan logo jika ada
@@ -65,11 +67,13 @@ class ExamController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama_ujian'   => 'required|string|max:255',
-            'jumlah_soal'  => 'required|integer|min:1',
-            'bobot_nilai'  => 'required|numeric|min:0',
-            'waktu_ujian'  => 'required|integer|min:1',
-            'logo'         => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_ujian'        => 'required|string|max:255',
+            'questions_count'   => 'required|integer|min:1',
+            'weight'            => 'required|numeric|min:0',
+            'duration'          => 'required|integer|min:1',
+            'exam_type'        => 'required|in:practice,real',
+            'exam_date'        => 'required|date',
+            'logo'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $exam = Exam::findOrFail($id);

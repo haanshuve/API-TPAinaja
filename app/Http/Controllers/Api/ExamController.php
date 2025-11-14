@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    // GET /api/exams
     public function index()
     {
         $exams = Exam::select('id', 'title', 'description', 'start_time', 'end_time')
