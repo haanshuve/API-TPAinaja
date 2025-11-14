@@ -15,9 +15,8 @@ class QuestionController extends Controller
      */
     public function index(Request $request, $exam_id)
     {
-        $exam = Exam::findOrFail($exam_id); // Fetch exam or return 404 if not found
-        $questions = $exam->questions ?? []; // Get the related questions for this exam
-
+        $exam = Exam::findOrFail($exam_id);
+        $questions = $exam->questions ?? [];
         // If the request is from API (Accept: application/json)
         if ($request->wantsJson()) {
             return response()->json([
