@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Question; // ✅ tambahkan ini!
 
 class Exam extends Model
 {
     use HasFactory;
 
-    // Nama tabel (opsional, bisa dihapus kalau sama dengan nama model jamak)
     protected $table = 'exams';
 
      protected $fillable = [
@@ -20,9 +20,7 @@ class Exam extends Model
         'logo',           // added field for the logo
     ];
 
-    /**
-     * Relasi: Satu ujian memiliki banyak soal
-     */
+    // ✅ fungsi relasi wajib ada dan persis seperti ini
     public function questions()
     {
         return $this->hasMany(Question::class, 'exam_id');

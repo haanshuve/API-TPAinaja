@@ -73,3 +73,5 @@ class QuestionController extends Controller
                          ->with('success', 'Soal berhasil ditambahkan!');
     }
 }
+
+
