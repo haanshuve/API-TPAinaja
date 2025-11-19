@@ -40,4 +40,23 @@ class AuthController extends Controller
     {
         return $request->User();
     }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string',
+            'email'    => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+            'role'     => 'required|in:admin,staff,peserta',
+        ]);
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password), 
+            'role'     => $request->role,
+        ]);
+
+        return response()->json(['message' => 'User registered successfully', 'data' => $user]);
+    }
 }
