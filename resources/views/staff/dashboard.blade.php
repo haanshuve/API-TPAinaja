@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('staff.layouts.app')
 
 @section('content')
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
     <main class="flex-1 p-8 overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-                <p class="text-gray-500 text-sm">Welcome back, {{ Auth::user()->name ?? 'Admin' }}</p>
+                <h1 class="text-2xl font-bold text-gray-900">Staff Dashboard</h1>
+                <p class="text-gray-500 text-sm">Welcome back, {{ Auth::user()->name ?? 'staff' }}</p>
             </div>
         </div>
 

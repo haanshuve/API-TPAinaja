@@ -18,7 +18,7 @@
         {{-- Jumlah Soal (questions_count) --}}
         <div>
             <label class="block font-medium text-gray-700 mb-1">Jumlah Soal</label>
-            <input type="number" name="questions_count" required
+            <input type="number" name="question_count" required
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-yellow-400 outline-none">
         </div>
 

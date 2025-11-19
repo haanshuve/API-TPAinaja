@@ -34,10 +34,10 @@ class ExamController extends Controller
     {
         $validated = $request->validate([
             'nama_ujian'        => 'required|string|max:255',
-            'questions_count'   => 'required|integer|min:1',
+            'question_count'   => 'required|integer|min:1',
             'weight'            => 'required|numeric|min:0',
             'duration'          => 'required|integer|min:1',
-            'exam_type'        => 'required|in:practice,real',
+            'exam_type' => 'required|in:tpa,cbt',
             'exam_date'        => 'required|date',
             'logo'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
