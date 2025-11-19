@@ -28,12 +28,28 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td colspan="4" class="text-center text-gray-400 italic py-6">
-                    Belum ada staff terdaftar
-                </td>
-            </tr>
-        </tbody>
+    @forelse ($staff as $index => $s)
+        <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
+            <td class="py-3">{{ $index + 1 }}</td>
+            <td class="py-3 font-medium text-gray-800">{{ $s->name }}</td>
+            <td class="py-3 text-gray-600">{{ $s->email }}</td>
+
+            <td class="py-3 text-center">
+                <a href="{{ route('admin.staff.edit', $s->id) }}"
+                    class="text-blue-600 hover:text-blue-800 transition">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="4" class="text-center text-gray-400 italic py-6">
+                Belum ada staff terdaftar.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
+
     </table>
 </div>
 @endsection

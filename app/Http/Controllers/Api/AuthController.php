@@ -6,29 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    $request->validate([
+        "email" => "required|email",
+        "password" => "required"
+    ]);
+ /*      return response()->json([
+        'received' => $request->all()
+    ]); */
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
+    $user = User::where("email", $request->email)->first();
 
-        $user = $request->user();
-        $token = $user->createToken('mobile_token')->plainTextToken;
-
+    if (!$user || !Hash::check($request->password, $user->password)) {
         return response()->json([
-            'message' => 'Login successful',
-            'token' => $token,
-            'user' => $user,
-        ]);
+            "message" => "Invalid credentials"
+        ], 401);
     }
+
+    $token = $user->createToken("auth_token")->plainTextToken;
+
+    return response()->json([
+        "message" => "Login success",
+        "token" => $token,
+        "user" => $user
+    ]);
+}
+
 
     public function logout(Request $request)
     {
@@ -42,21 +50,23 @@ class AuthController extends Controller
     }
 
     public function register(Request $request)
-    {
-        $request->validate([
-            'name'     => 'required|string',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
-            'role'     => 'required|in:admin,staff,peserta',
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|unique:users,email',
+        'password' => 'required|min:6',
+    ]);
 
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => bcrypt($request->password), 
-            'role'     => $request->role,
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+    ]);
 
-        return response()->json(['message' => 'User registered successfully', 'data' => $user]);
-    }
+    return response()->json([
+        'message' => 'User created successfully',
+        'user' => $user
+    ], 201);
+}
+
 }

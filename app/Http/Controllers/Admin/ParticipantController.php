@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class ParticipantController extends Controller
 {
@@ -13,7 +14,7 @@ class ParticipantController extends Controller
     public function index()
     {
         // Fetch all participants from the database
-        $participants = Participant::all(); // You might want to paginate results for large datasets
+        $participants = User::where('role', 'peserta')->get();
         return view('admin.participants.index', compact('participants'));
     }
 
