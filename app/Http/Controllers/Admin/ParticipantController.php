@@ -45,44 +45,35 @@ class ParticipantController extends Controller
     }
 
     // Show the form for editing an existing participant
-    public function edit($id)
-    {
-        // Find the participant by ID, fail if not found
-        $participant = Participant::findOrFail($id);
-        return view('admin.participants.edit', compact('participant'));
-    }
+public function edit($id)
+{
+    // Ambil peserta dengan role 'peserta' berdasarkan ID
+    $participant = User::where('role', 'peserta')->where('id', $id)->firstOrFail();
+
+    // Kirim variable participant ke view
+    return view('admin.participants.edit', compact('participant'));
+}
+
 
     // Update the participant's information
-    public function update(Request $request, $id)
-    {
-        // Find the participant by ID, fail if not found
-        $participant = Participant::findOrFail($id);
+   public function update(Request $request, $id)
+{
+    $participant = User::where('role', 'peserta')->where('id', $id)->firstOrFail();
 
-        // Validate incoming data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:participants,email,' . $participant->id,  // Exclude current participant's email
-            'password' => 'nullable|min:6|confirmed',  // Password is optional during update, but needs confirmation if provided
-        ]);
+    $participant->update([
+        'name' => $request->name,
+        'email' => $request->email,
+    ]);
 
-        // Update participant data
-        $participant->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
-                ? Hash::make($request->password)  // Hash the new password if provided
-                : $participant->password,  // Otherwise, keep the old password
-        ]);
-
-        return redirect()->route('admin.participants.index')
-            ->with('success', 'Peserta berhasil diperbarui!');
-    }
+    return redirect()->route('admin.participants.index')
+                     ->with('success', 'Peserta berhasil diperbarui');
+}
 
     // Delete a participant
     public function destroy($id)
     {
         // Find and delete the participant
-        $participant = Participant::findOrFail($id);
+        $participant = User::where('role', 'peserta')->where('id', $id)->firstOrFail();
         $participant->delete();
 
         return redirect()->route('admin.participants.index')

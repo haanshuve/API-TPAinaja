@@ -30,10 +30,10 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('auth.login');
     Route::post('/login', 'login')->name('auth.login.post');
     Route::post('/logout', 'logout')->name('auth.logout');
-    /* Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update'); */
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
 // =======================

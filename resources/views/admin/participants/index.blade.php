@@ -30,8 +30,8 @@
                 <!-- Password & Aksi -->
                 <div class="flex items-center gap-6">
                     <div class="flex items-center text-gray-700">
-                        <span class="tracking-widest font-semibold">********</span>
-                        <i class="fas fa-eye-slash text-gray-400 ml-2"></i>
+                       {{--  <span class="tracking-widest font-semibold">********</span>
+                        <i class="fas fa-eye-slash text-gray-400 ml-2"></i> --}}
                     </div>
 
                     <!-- Tombol Edit dan Hapus -->
