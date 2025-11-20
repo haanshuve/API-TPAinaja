@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') | TPAinaja</title>
+    <title>@yield('title') Dashboard| TPAinaja</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,7 +23,7 @@
 
 <body class="bg-[#F8FAFC] text-gray-800 flex h-screen">
 
-    <aside class="w-64 bg-[#FFC100] flex flex-col justify-between py-6 text-gray-800">
+    <aside class="w-64 bg-[#FFC920] flex flex-col justify-between py-6 text-gray-800">
         <div>
             <!-- 🔸 Logo -->
             <div class="flex items-center justify-center mb-10">
@@ -93,11 +93,27 @@
                     <option>This Month</option>
                 </select>
 
-               <!-- 🔘 Tombol Profil -->
-            <button type="button" class="w-10 h-10 bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold rounded-full flex items-center justify-center shadow-md"
-                    data-bs-toggle="modal" data-bs-target="#profileModal">
-                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-            </button>
+             <!-- 🔘 Tombol Profil -->
+<button
+    type="button"
+    class="w-10 h-10 rounded-full overflow-hidden shadow-md flex items-center justify-center bg-indigo-500 hover:bg-indigo-600"
+    data-bs-toggle="modal"
+    data-bs-target="#profileModal"
+>
+    @if(Auth::user()->profile_picture)
+        <img 
+            src="{{ asset('storage/' . Auth::user()->profile_picture) }}" 
+            alt="Profile"
+            class="w-full h-full object-cover"
+        >
+    @else
+        <span class="text-white font-bold">
+            {{ strtoupper(substr(trim(Auth::user()->name ?? 'U'), 0, 1)) }}
+        </span>
+    @endif
+</button>
+
+
             </div>
         </header>
 

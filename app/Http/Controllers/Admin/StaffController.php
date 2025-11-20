@@ -10,39 +10,69 @@ class StaffController extends Controller
 {
     public function index()
     {
-        // Ambil semua user dengan role 'staff'
         $staff = User::where('role', 'staff')->get();
-
-        // Kirim ke view
         return view('admin.staff.index', compact('staff'));
     }
 
     public function create()
     {
-        // Jika nanti butuh role list, isi di sini
-        // $roles = ['staff'];  
-        // $isDisabled = false;
-
         return view('admin.staff.create');
     }
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'role' => 'staff',
-    ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'staff',
+        ]);
 
-    return redirect()->route('admin.staff.index')
-        ->with('success', 'Staff baru berhasil ditambahkan.');
-}
+        return redirect()->route('admin.staff.index')
+            ->with('success', 'Staff baru berhasil ditambahkan.');
+    }
 
+    public function edit($id)
+    {
+        $staff = User::where('role', 'staff')->findOrFail($id);
+        return view('admin.staff.edit', compact('staff'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $staff = User::where('role', 'staff')->findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:6',
+        ]);
+
+        $staff->name = $request->name;
+        $staff->email = $request->email;
+
+        if ($request->filled('password')) {
+            $staff->password = bcrypt($request->password);
+        }
+
+        $staff->save();
+
+        return redirect()->route('admin.staff.index')
+            ->with('success', 'Data staff berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $staff = User::where('role', 'staff')->where('id', $id)->firstOrFail();
+        $staff->delete();
+
+        return redirect()->route('admin.staff.index')
+            ->with('success', 'Staff berhasil dihapus.');
+    }
 }

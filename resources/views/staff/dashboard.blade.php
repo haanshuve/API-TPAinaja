@@ -65,8 +65,8 @@
                 }]
             },
             options: {
-                plugins: { legend: { display: false } },
-                scales: { y: { display: true }, x: { display: false } }
+                plugins: { legend: { display: true } },
+                scales: { y: { display: false }, x: { display: true } }
             }
         });
     </script>

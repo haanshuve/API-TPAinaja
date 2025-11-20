@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        return view('profile.edit', ['user' => Auth::user()]);
+        return view('admin.profile.edit', ['user' => Auth::user()]);
     }
 
     /**
@@ -52,9 +52,9 @@ class ProfileController extends Controller
         }
 
         // Update the user's profile fields (name, email, phone, address)
-        $user->update($request->only(['name', 'email', 'phone', 'address']));
+        $user->update($request->only(['name', 'email', 'phone', 'address', 'profile_picture']));
 
         // Redirect back to the edit page with a success message
-        return redirect()->route('admin.profile.edit')->with('success', 'Profil berhasil diperbarui!');
+        return redirect()->route('admin.dashboard')->with('success', 'Profil berhasil diperbarui!');
     }
 }
