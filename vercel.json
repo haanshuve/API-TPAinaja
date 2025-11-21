@@ -5,7 +5,7 @@
         "api/index.php": { "runtime": "vercel-php@0.6.0" }
     },
     "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/" },
+        { "src": "/build/(.*)", "dest": "/public/build/$1" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
@@ -29,6 +29,7 @@
         "DB_HOST": "4gg.h.filess.io",
         "DB_PORT": "3306",
         "DB_DATABASE": "db2024_stormtorn",
-        "DB_USERNAME": "db2024_stormtorn"
+        "DB_USERNAME": "db2024_stormtorn",
+        "DB_PASSWORD": "your_db_password_here"
     }
 }
