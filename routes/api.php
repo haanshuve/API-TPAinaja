@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\ExamController;
 
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
@@ -19,3 +20,5 @@ Route::get('/exams/{exam_id}/questions/{question_id}', [QuestionController::clas
 Route::get('/exams', function () {
     return \App\Models\Exam::all();
 });
+
+Route::get('tpa', [ExamController::class, 'getTpaExams']);

@@ -8,36 +8,25 @@ use Illuminate\Http\Request;
 
 class ExamController extends Controller
 {
-    public function index()
-    {
-        $exams = Exam::select('id', 'title', 'description', 'start_time', 'end_time')
-                     ->where('is_active', true)
-                     ->get();
+   public function getTpaExams()
+{
+    // Ambil hanya ujian yang tipe TPA
+    $tpaExams = Exam::where('exam_type', 'TPA')->get();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Daftar ujian aktif berhasil diambil',
-            'data' => $exams
-        ], 200);
-    }
+    // Menyesuaikan nama field agar sesuai dengan yang diharapkan Flutter
+    $formattedExams = $tpaExams->map(function ($exam) {
+        return [
+            'id' => $exam->id,
+            'title' => $exam->nama_ujian,  // Mengubah 'nama_ujian' menjadi 'title'
+            'question_count' => $exam->question_count,
+            'weight' => $exam->weight,
+            'duration' => $exam->duration,
+            'exam_type' => $exam->exam_type,
+            'logo' => $exam->logo,
+        ];
+    });
 
-    // GET /api/exams/{id}
-    public function show($id)
-    {
-        $exam = Exam::with('questions:id,exam_id,question_text,option_a,option_b,option_c,option_d,correct_answer')
-                    ->find($id);
+    return response()->json($formattedExams);
+}
 
-        if (!$exam) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Ujian tidak ditemukan'
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Detail ujian berhasil diambil',
-            'data' => $exam
-        ], 200);
-    }
 }
