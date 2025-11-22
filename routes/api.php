@@ -21,4 +21,6 @@ Route::get('/exams', function () {
     return \App\Models\Exam::all();
 });
 
-Route::get('tpa', [ExamController::class, 'getTpaExams']);
+Route::get('/tpa', [ExamController::class, 'getTpaExams']);
+Route::get('/cbt', [ExamController::class, 'getCbtExams']);
+
