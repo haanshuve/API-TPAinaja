@@ -8,24 +8,17 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    // GET /api/exams/{exam_id}/questions
     public function index($exam_id)
-    {
-        $questions = Question::where('exam_id', $exam_id)
-                            ->select('id', 'question_text', 'option_a', 'option_b', 'option_c', 'option_d')
-                            ->get();
+{
+    // Ambil soal untuk ujian tertentu
+    $questions = Question::where('exam_id', $exam_id)->get();
+    return response()->json($questions);
+}
 
-        if ($questions->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Belum ada soal untuk ujian ini'
-            ], 404);
-        }
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Soal ujian berhasil diambil',
-            'data' => $questions
-        ], 200);
-    }
+public function show($exam_id, $question_id)
+{
+    // Ambil soal berdasarkan ID
+    $question = Question::where('exam_id', $exam_id)->findOrFail($question_id);
+    return response()->json($question);
+}
 }

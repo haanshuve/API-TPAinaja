@@ -9,7 +9,6 @@ class Exam extends Model
 {
     use HasFactory;
 
-    // Nama tabel (opsional, bisa dihapus kalau sama dengan nama model jamak)
     protected $table = 'exams';
 
      protected $fillable = [
@@ -29,5 +28,10 @@ class Exam extends Model
     public function questions()
     {
         return $this->hasMany(Question::class, 'exam_id');
+    }
+
+     public function hasilTes()
+    {
+        return $this->hasMany(HasilTes::class);
     }
 }
