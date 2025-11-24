@@ -28,4 +28,9 @@ class Exam extends Model
     {
         return $this->hasMany(Question::class, 'exam_id');
     }
+
+     public function hasilTes()
+    {
+        return $this->hasMany(HasilTes::class);
+    }
 }
