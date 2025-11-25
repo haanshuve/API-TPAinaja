@@ -12,20 +12,21 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\staff\DashboardController;
 use App\Http\Controllers\staff\QuestionController as StaffQuestionController;
+use App\Http\Controllers\staff\ExamController as StaffExamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
-// =======================
+
 // Public Landing Page
-// =======================
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// =======================
+
 // AUTHENTICATION ROUTES
-// =======================
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('auth.login');
     Route::post('/login', 'login')->name('auth.login.post');
@@ -36,9 +37,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
-// =======================
+
 // ADMIN ROUTES
-// =======================
+
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Admin Dashboard
@@ -84,18 +85,39 @@ Route::prefix('staff')->name('staff.')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// =======================
-// STAFF ROUTES
-// =======================
+
 Route::prefix('staff')->name('staff.')->middleware('auth')->group(function () {
 
-    // Staff Dashboard
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Profile Management
+   // Exam CRUD
+    Route::prefix('exam')->name('exam.')->group(function () {
+        Route::get('/', [StaffExamController::class, 'index'])->name('index');
+        Route::get('/create', [StaffExamController::class, 'create'])->name('create');
+        Route::post('/', [StaffExamController::class, 'store'])->name('store');
+
+        Route::get('/{id}/edit', [StaffExamController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [StaffExamController::class, 'update'])->name('update');
+
+        Route::delete('/{id}', [StaffExamController::class, 'destroy'])->name('destroy');
+    });
+
+    // Questions
+    Route::prefix('questions')->name('questions.')->group(function () {
+        Route::get('/{exam_id}', [StaffQuestionController::class, 'index'])->name('index');
+        Route::get('/{exam_id}/create', [StaffQuestionController::class, 'create'])->name('create');
+        Route::post('/{exam_id}', [StaffQuestionController::class, 'store'])->name('store');
+    });
+    // Reports
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/', [ReportController::class, 'index'])->name('index');
+    });
+
+    // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
 
-    // Staff Questions
-    Route::get('/questions', [StaffQuestionController::class, 'index'])->name('questions.index');
-
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
