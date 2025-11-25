@@ -21,16 +21,17 @@ class Exam extends Model
     'exam_date',
     'logo'
 ];
+     public function questions()
+{
+    return $this->hasMany(Question::class);
+}
 
-
-    // ✅ fungsi relasi wajib ada dan persis seperti ini
-    public function questions()
-    {
-        return $this->hasMany(Question::class, 'exam_id');
-    }
 
      public function hasilTes()
     {
         return $this->hasMany(HasilTes::class);
     }
+
+    
+   
 }
