@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Exam;
 
 class Question extends Model
 {
     use HasFactory;
+
+    protected $table = 'questions';
 
     protected $fillable = [
         'exam_id',
@@ -22,6 +25,6 @@ class Question extends Model
     // Relasi dengan model Exam
     public function exam()
     {
-        return $this->belongsTo(Exam::class);
+        return $this->belongsTo(Exam::class, 'exam_id');
     }
 }
