@@ -20,18 +20,17 @@ class Exam extends Model
     'exam_date',
     'logo'
 ];
+     public function questions()
+{
+    return $this->hasMany(Question::class);
+}
 
-
-    /**
-     * Relasi: Satu ujian memiliki banyak soal
-     */
-    public function questions()
-    {
-        return $this->hasMany(Question::class, 'exam_id');
-    }
 
      public function hasilTes()
     {
         return $this->hasMany(HasilTes::class);
     }
+
+    
+   
 }

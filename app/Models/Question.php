@@ -1,5 +1,5 @@
 <?php
-
+// app/Models/Question.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,17 +12,14 @@ class Question extends Model
     protected $fillable = [
         'exam_id',
         'question_text',
-        'question_file',
         'option_a',
         'option_b',
         'option_c',
         'option_d',
-        'correct_answer',
+        'correct_option',
     ];
 
-    /**
-     * Relasi: Satu soal milik satu ujian (Exam)
-     */
+    // Relasi dengan model Exam
     public function exam()
     {
         return $this->belongsTo(Exam::class);
