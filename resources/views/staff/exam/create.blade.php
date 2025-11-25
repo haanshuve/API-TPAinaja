@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.layouts.app')
 
 @section('title', 'Buat Ujian')
 
@@ -11,7 +11,7 @@
         </div>
 
         <div class="p-6">
-            <form action="{{ route('exam.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+            <form action="{{ route('staff.exam.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
                 @csrf
 
                 <div>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="flex justify-end gap-3 pt-3">
-                    <a href="{{ route('exam.index') }}"
+                    <a href="{{ route('staff.exam.index') }}"
                         class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-md shadow-sm">
                         Batal
                     </a>
