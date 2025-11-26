@@ -44,10 +44,6 @@ class AuthController extends Controller
                 return redirect()->route('staff.dashboard');
             }
 
-            if ($role === 'peserta') {
-                return redirect()->route('peserta.dashboard');
-            }
-
             // Role tidak dikenali
             Auth::logout();
             return back()->withErrors([

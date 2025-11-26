@@ -25,16 +25,15 @@ Route::get('/', function () {
 })->name('home');
 
 
-// AUTHENTICATION ROUTES
 
 Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('auth.login');
+    Route::get('/login', 'showLoginForm')->middleware('throttle:5,10')->name('auth.login');
     Route::post('/login', 'login')->name('auth.login.post');
     Route::post('/logout', 'logout')->name('auth.logout');
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::get('password/reset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [AuthController::class, 'reset'])->name('password.update');
 });
 
 
@@ -48,8 +47,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Modal Profile
     Route::get('/profile-modal', fn() => view('modal.modalprofile'))->name('modal.profile');
 
-  // Staff Management
-Route::prefix('staff')->name('staff.')->group(function () {
+    // Staff Management
+    Route::prefix('staff')->name('staff.')->group(function () {
 
     Route::get('/', [StaffController::class, 'index'])->name('index');
     Route::get('/create', [StaffController::class, 'create'])->name('create');
