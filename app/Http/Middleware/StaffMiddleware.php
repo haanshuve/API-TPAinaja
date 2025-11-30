@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -8,10 +9,13 @@ class StaffMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user() && auth()->user()->role === 'staff') {
+        /** @var \App\Models\User|null $user */
+        $user = $request->user();
+
+        if ($user && $user->role === 'staff') {
             return $next($request);
         }
 
-        return redirect()->route('admin.dashboard');  // Redirect to admin dashboard
+        return redirect()->route('admin.dashboard');
     }
 }

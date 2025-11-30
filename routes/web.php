@@ -14,8 +14,6 @@ use App\Http\Controllers\staff\DashboardController;
 use App\Http\Controllers\staff\QuestionController as StaffQuestionController;
 use App\Http\Controllers\staff\ExamController as StaffExamController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 // Public Landing Page
@@ -37,7 +35,6 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 
-// ADMIN ROUTES
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
