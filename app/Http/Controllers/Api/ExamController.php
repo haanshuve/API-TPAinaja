@@ -1,91 +1,237 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\Question;
+use App\Models\Option;
 use App\Models\HasilTes;
 use Illuminate\Http\Request;
-use App\Http\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ExamController extends Controller
 {
-    // TPA
-    public function getTpaExams()
-    {
-        $exams = Exam::where('exam_type', 'tpa')->get();
-
-        return response()->json(
-            $exams->map(function ($e) {
-                return [
-                    'id' => $e->id,
-                    'title' => $e->nama_ujian,
-                    'question_count' => $e->question_count,
-                    'weight' => $e->weight,
-                    'duration' => $e->duration,
-                    'logo' => asset($e->logo),
-                ];
-            })
-        );
-    }
-
-    // CBT
-    public function getCbtExams()
-    {
-        $exams = Exam::where('exam_type', 'cbt')->get();
-
-        return response()->json(
-            $exams->map(function ($e) {
-                return [
-                    'id' => $e->id,
-                    'title' => $e->nama_ujian,
-                    'question_count' => $e->question_count,
-                    'weight' => $e->weight,
-                    'duration' => $e->duration,
-                    'logo' => asset($e->logo),
-                ];
-            })
-        );
-    }
-
+    /**
+     * Get list of all exams
+     */
     public function index()
-{
-    return Exam::all();
-}
-public function riwayatUjian()
-{
-    // Cek apakah pengguna sudah terautentikasi
-    if (!Auth::check()) { // Gunakan Auth::check() untuk memeriksa autentikasi
+    {
+        Log::info('Fetching all exams with questions.');
+
+        // Get exams with questions and their options
+        $exams = Exam::with('questions.options')->get();
+
         return response()->json([
-            'message' => 'Unauthorized'
-        ], 401); // Kembalikan status unauthorized jika pengguna tidak terautentikasi
+            'status' => 'success',
+            'data' => $exams,
+        ], 200);
     }
 
-    $userId = Auth::user()->id; // Gunakan Auth::user()->id untuk mendapatkan ID pengguna yang sedang login
+    /**
+     * Get specific exam detail
+     */
+    public function show($id)
+    {
+        $exam = Exam::with('questions.options')->find($id);
 
-    // Ambil riwayat ujian berdasarkan user_id
-    $riwayatUjian = HasilTes::with('exam')
-        ->where('user_id', $userId)
-        ->get();
+        if (!$exam) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Exam not found',
+            ], 404);
+        }
 
-    if ($riwayatUjian->isEmpty()) {
         return response()->json([
-            'message' => 'Tidak ada riwayat ujian.'
+            'status' => 'success',
+            'data' => $exam,
+        ], 200);
+    }
+
+    /**
+     * Get questions for specific exam
+     */
+public function getQuestions($examId)
+{
+    $exam = Exam::with('questions')->find($examId);
+
+    if (!$exam) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Exam not found',
         ], 404);
     }
 
-    $riwayatData = $riwayatUjian->map(function ($item) {
-        return [
-            'img' => $item->exam->logo ?? 'default_image.png',
-            'title' => $item->exam->title ?? 'No Title',
-            'soal' => $item->exam->questions_count ?? 'No Questions',
-            'score' => $item->score,
-            'tanggal' => $item->created_at->format('d-m-Y'),
-        ];
-    });
+    // Jika `questions` kosong, kirimkan array kosong
+    $questions = $exam->questions ?: [];
 
-    return response()->json($riwayatData, 200);
+    return response()->json([
+        'status' => 'success',
+        'data' => [
+            'exam' => [
+                'id' => $exam->id,
+                'title' => $exam->title,
+                'duration' => $exam->duration,
+            ],
+            'questions' => $questions,  // Pastikan selalu berupa array
+        ],
+    ], 200);
 }
 
+    /**
+     * Submit exam result
+     */
+    public function submitResult(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated',
+            ], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'exam_id' => 'required|exists:exams,id',
+            'answers' => 'required|array',
+            'answers.*.question_id' => 'required|exists:questions,id',
+            'answers.*.chosen_option' => 'required|string|in:A,B,C,D,E',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $examId = $request->exam_id;
+        $answers = $request->answers;
+
+        // Calculate score
+        $totalScore = 0;
+        $correctAnswers = 0;
+        $totalQuestions = count($answers);
+
+        foreach ($answers as $answer) {
+            $question = Question::find($answer['question_id']);
+            
+            if ($question && $question->correct_answer === $answer['chosen_option']) {
+                $correctAnswers++;
+            }
+        }
+
+        if ($totalQuestions > 0) {
+            $totalScore = round(($correctAnswers / $totalQuestions) * 100, 2);
+        }
+
+        try {
+            $hasilTes = HasilTes::create([
+                'user_id' => $user->id,
+                'exam_id' => $examId,
+                'score' => $totalScore,
+                'correct_answers' => $correctAnswers,
+                'total_questions' => $totalQuestions,
+                'answers' => json_encode($answers), // Store answers as JSON
+                'submitted_at' => now(),
+            ]);
+
+            Log::info('Exam result submitted', [
+                'user_id' => $user->id,
+                'exam_id' => $examId,
+                'score' => $totalScore,
+            ]);
+
+            return response()->json([
+                'message' => 'Exam submitted successfully',
+                'hasil_tes_id' => $hasilTes->id,
+                'score' => $totalScore,
+                'correct_answers' => $correctAnswers,
+                'total_questions' => $totalQuestions,
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error submitting exam result: ' . $e->getMessage());
+
+            return response()->json([
+                'message' => 'Error occurred while saving the exam result',
+            ], 500);
+        }
+    }
+
+    /**
+     * Get exam result detail
+     */
+    public function getHasilUjian($hasilTesId)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthenticated',
+            ], 401);
+        }
+
+        $hasilTes = HasilTes::with(['exam.questions', 'user'])
+            ->where('id', $hasilTesId)
+            ->where('user_id', $user->id) // Ensure user can only see their own result
+            ->first();
+
+        if (!$hasilTes) {
+            return response()->json([
+                'message' => 'Exam result not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'id' => $hasilTes->id,
+                'exam_title' => $hasilTes->exam->title ?? 'No title',
+                'image' => $hasilTes->exam->questions->first()->logo ?? '', // Check for null
+                'total_questions' => $hasilTes->total_questions,
+                'score' => $hasilTes->score,
+                'correct_answers' => $hasilTes->correct_answers,
+                'submitted_at' => $hasilTes->submitted_at->format('d M Y H:i'),
+                'exam' => $hasilTes->exam,
+            ],
+        ], 200);
+    }
+
+    /**
+     * Get user's exam history
+     */
+    public function getUserHistory(Request $request, $userId)
+    {
+        $user = $request->user();
+
+        if ($user->id != $userId) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $history = HasilTes::with(['exam.questions'])
+            ->where('user_id', $userId)
+            ->orderBy('submitted_at', 'desc')
+            ->get()
+            ->map(function ($hasil) {
+                return [
+                    'id' => $hasil->id,
+                    'exam_id' => $hasil->exam_id,
+                    'exam_title' => $hasil->exam->title ?? 'N/A',
+                    'questions_logo' => $hasil->exam->questions->first()->logo ?? '',
+                    'score' => $hasil->score,
+                    'correct_answers' => $hasil->correct_answers,
+                    'total_questions' => $hasil->total_questions,
+                    'submitted_at' => $hasil->submitted_at->format('d M Y H:i'),
+                ];
+            });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $history,
+        ], 200);
+    }
 }

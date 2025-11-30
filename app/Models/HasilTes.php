@@ -15,15 +15,29 @@ class HasilTes extends Model
         'user_id',
         'exam_id',
         'score',
+        'correct_answers',
+        'total_questions',
+        'answers',
+        'submitted_at',
     ];
 
-    // Relasi ke tabel User
+    protected $casts = [
+        'answers' => 'array',
+        'submitted_at' => 'datetime',
+        'score' => 'float',
+    ];
+
+    /**
+     * Relationship: HasilTes belongs to User
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relasi ke tabel Exam
+    /**
+     * Relationship: HasilTes belongs to Exam
+     */
     public function exam()
     {
         return $this->belongsTo(Exam::class);
